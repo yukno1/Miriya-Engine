@@ -3,10 +3,14 @@
 #include "Miriya/Renderer/Shader.h"
 #include <glm/glm.hpp>
 
+// TODO: REMOVE!
+typedef unsigned int GLenum;
+
 namespace Miriya {
     class OpenGLShader : public Shader {
     public:
         OpenGLShader(const std::string& vertexSrc, const std::string& fragmentSrc);
+        OpenGLShader(const std::string& filepath);
         virtual ~OpenGLShader();
 
         // In the future, want to have subclasses; Implemented per API; so need to be virtual
@@ -23,6 +27,9 @@ namespace Miriya {
         void UploadUniformMat3(const std::string &name, const glm::mat3& matrix);
         void UploadUniformMat4(const std::string &name, const glm::mat4& matrix);
     private:
+        std::string ReadFile(const std::string &filePath);
+        std::unordered_map<GLenum, std::string> Preprocess(const std::string &source);
+        void Compile(const std::unordered_map<GLenum, std::string> &shaderSources);
         uint32_t m_RendererID;
     };
 } // Miriya

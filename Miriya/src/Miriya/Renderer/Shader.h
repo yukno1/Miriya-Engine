@@ -16,6 +16,7 @@ namespace Miriya {
         // void UploadUniformFloat4(const std::string &name, const glm::vec4& values);
         // void UploadUniformMat4(const std::string &name, const glm::mat4& matrix);
 
+        static Shader* Create(const std::string& filepath);
         static Shader* Create(const std::string& vertexSrc, const std::string& fragmentSrc);
     };
 } // Miriya
