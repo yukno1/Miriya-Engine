@@ -9,13 +9,15 @@ typedef unsigned int GLenum;
 namespace Miriya {
     class OpenGLShader : public Shader {
     public:
-        OpenGLShader(const std::string& vertexSrc, const std::string& fragmentSrc);
         OpenGLShader(const std::string& filepath);
+        OpenGLShader(const std::string& name, const std::string& vertexSrc, const std::string& fragmentSrc);
         virtual ~OpenGLShader();
 
         // In the future, want to have subclasses; Implemented per API; so need to be virtual
         void Bind() const override;
         void Unbind() const override; // for debugging purposes
+
+        const std::string& GetName() const override { return m_Name; }
 
         void UploadUniformInt(const std::string &name, int value);
 
@@ -31,5 +33,6 @@ namespace Miriya {
         std::unordered_map<GLenum, std::string> Preprocess(const std::string &source);
         void Compile(const std::unordered_map<GLenum, std::string> &shaderSources);
         uint32_t m_RendererID;
+        std::string m_Name;
     };
 } // Miriya
