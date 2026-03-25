@@ -20,5 +20,4 @@ namespace Miriya {
 
         static VertexArray *Create();
     };
-
 } // Miriya

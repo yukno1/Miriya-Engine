@@ -11,6 +11,7 @@
 #include "Miriya/Input.h"
 #include "Miriya/Keycodes.h"
 #include "Miriya/MouseButtonCodes.h"
+#include "Miriya/OrthographicCameraController.h"
 
 #include "Miriya/ImGui/ImGuiLayer.h"
 
