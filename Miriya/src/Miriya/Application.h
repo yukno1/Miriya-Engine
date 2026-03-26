@@ -27,13 +27,15 @@ namespace Miriya {
         inline static Application& Get() { return *s_Instance; }
         inline Window& GetWindow() { return *m_Window; }
     private:
-        bool OnWindowClosed(WindowCloseEvent& e);
+        bool OnWindowClose(WindowCloseEvent& e);
+        bool OnWindowResize(WindowResizeEvent& e);
 
         std::unique_ptr<Window> m_Window;
         // imgui layer automatically added by Miriya runtime
         ImGuiLayer* m_ImGuiLayer;
 
         bool m_Running = true;
+        bool m_Minimized = false;
         LayerStack m_LayerStack;
 
         // Timestep m_Timestep;

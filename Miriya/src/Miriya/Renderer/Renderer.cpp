@@ -11,6 +11,10 @@ namespace Miriya {
          RenderCommand::Init();
     }
 
+    void Renderer::OnWindowResize(uint32_t width, uint32_t height) {
+        RenderCommand::SetViewport(0, 0, width, height);
+    }
+
     // make sure shader gets right uniforms
     // environment map; cube map; camera; light; material; model; etc
     void Renderer::BeginScene(OrthographicCamera &camera) {

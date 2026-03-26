@@ -46,10 +46,9 @@ namespace Miriya {
 
     void Application::OnEvent(Event &e) {
         EventDispatcher dispatcher(e);
-        dispatcher.Dispatch<WindowCloseEvent>(BIND_EVENT_FN(OnWindowClosed));
-        // dispatcher.Dispatch<WindowCloseEvent>([this](auto && PH1) { return OnWindowClosed(std::forward<decltype(PH1)>(PH1)); });
+        dispatcher.Dispatch<WindowCloseEvent>(BIND_EVENT_FN(OnWindowClose));
+        dispatcher.Dispatch<WindowResizeEvent>(BIND_EVENT_FN(OnWindowResize));
 
-        MIR_CORE_TRACE("{0}", e.ToString());
 
         for (auto it = m_LayerStack.end(); it != m_LayerStack.begin();) {
             // go backwards stack
@@ -67,9 +66,10 @@ namespace Miriya {
             Timestep timestep = time - m_LastFrameTime;
             m_LastFrameTime = time;
 
-
-            for (Layer *layer: m_LayerStack)
-                layer->OnUpdate(timestep);
+            if (!m_Minimized) {
+                for (Layer *layer: m_LayerStack)
+                    layer->OnUpdate(timestep);
+            }
 
             // TODO: do on render thread
             m_ImGuiLayer->Begin();
@@ -77,12 +77,26 @@ namespace Miriya {
                 layer->OnImGuiRender();
             m_ImGuiLayer->End();
 
+
             m_Window->OnUpdate();
         }
     }
 
-    bool Application::OnWindowClosed(WindowCloseEvent &e) {
+    bool Application::OnWindowClose(WindowCloseEvent &e) {
         m_Running = false;
         return true;
+    }
+
+    bool Application::OnWindowResize(WindowResizeEvent &e) {
+        if (e.GetWidth() == 0 || e.GetHeight() == 0)
+        {
+            m_Minimized = true;
+            return false;
+        }
+
+        m_Minimized = false;
+        Renderer::OnWindowResize(e.GetWidth(), e.GetHeight());
+
+        return false;
     }
 }
