@@ -27,8 +27,3 @@
 #include "Miriya/Renderer/OrthographicCamera.h"
 // ---------------------------------------------
 
-// --------Entry Point--------------------------
-#include "../src/Miriya/Core/EntryPoint.h"
-// ---------------------------------------------
-
-
