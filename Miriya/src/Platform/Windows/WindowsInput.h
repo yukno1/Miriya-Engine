@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Miriya/Input.h"
+#include "../../Miriya/Core/Input.h"
 
 namespace Miriya {
 

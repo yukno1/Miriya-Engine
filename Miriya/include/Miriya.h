@@ -2,15 +2,15 @@
 
 // For use by Miriya applications
 
-#include "Miriya/Application.h"
-#include "Miriya/Layer.h"
-#include "Miriya/Log.h"
+#include "../src/Miriya/Core/Application.h"
+#include "Miriya/Core/Layer.h"
+#include "Miriya/Core/Log.h"
 
 #include "Miriya/Core/Timestep.h"
 
-#include "Miriya/Input.h"
-#include "Miriya/Keycodes.h"
-#include "Miriya/MouseButtonCodes.h"
+#include "../src/Miriya/Core/Input.h"
+#include "Miriya/Core/Keycodes.h"
+#include "../src/Miriya/Core/MouseButtonCodes.h"
 #include "Miriya/OrthographicCameraController.h"
 
 #include "Miriya/ImGui/ImGuiLayer.h"
@@ -28,7 +28,7 @@
 // ---------------------------------------------
 
 // --------Entry Point--------------------------
-#include "Miriya/EntryPoint.h"
+#include "../src/Miriya/Core/EntryPoint.h"
 // ---------------------------------------------
 
 

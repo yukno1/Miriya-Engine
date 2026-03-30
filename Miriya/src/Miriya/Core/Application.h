@@ -3,7 +3,7 @@
 #include "Core.h"
 
 #include "Window.h"
-#include "Miriya/LayerStack.h"
+#include "LayerStack.h"
 #include "Miriya/Events/Event.h"
 #include "Miriya/Events/ApplicationEvent.h"
 

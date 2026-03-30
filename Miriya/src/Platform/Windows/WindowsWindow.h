@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Miriya/Window.h"
+#include "../../Miriya/Core/Window.h"
 #include "Miriya/Renderer/GraphicsContext.h"
 
 struct GLFWwindow;

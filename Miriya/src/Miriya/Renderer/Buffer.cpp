@@ -3,7 +3,7 @@
 #include "Platform/OpenGL/OpenGLBuffer.h"
 
 #include "Renderer.h"
-#include "Miriya/Core.h"
+#include "Miriya/Core/Core.h"
 
 namespace Miriya {
     VertexBuffer * VertexBuffer::Create(float *vertices, uint32_t size) {

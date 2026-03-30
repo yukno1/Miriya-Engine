@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Miriya/Core.h"
+#include "../Core/Core.h"
 
 namespace Miriya {
     // Events in Hazel are currently blocking, meaning when an event occurs it

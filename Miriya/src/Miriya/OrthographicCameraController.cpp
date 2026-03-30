@@ -1,8 +1,8 @@
 #include "mirpch.h"
 #include "OrthographicCameraController.h"
 
-#include "Input.h"
-#include "Keycodes.h"
+#include "Core/Input.h"
+#include "Core/Keycodes.h"
 
 
 namespace Miriya {

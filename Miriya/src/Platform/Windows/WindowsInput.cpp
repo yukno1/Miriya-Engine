@@ -2,7 +2,7 @@
 #include "WindowsInput.h"
 
 #include <GLFW/glfw3.h>
-#include "Miriya/Application.h"
+#include "../../Miriya/Core/Application.h"
 
 namespace Miriya {
 

@@ -1,7 +1,7 @@
 #include "mirpch.h"
 #include "OpenGLVertexArray.h"
 
-#include <GLAD/gl.h>
+#include <glad/gl.h>
 
 namespace Miriya {
 

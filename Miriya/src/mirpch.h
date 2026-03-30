@@ -21,4 +21,4 @@
 #endif
 
 // Include core logging functionality
-#include "Miriya/Log.h"
+#include "Miriya/Core/Log.h"

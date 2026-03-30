@@ -1,7 +1,7 @@
 #include "mirpch.h"
 #include "WindowsWindow.h"
 
-#include "Miriya/Log.h"
+#include "../../Miriya/Core/Log.h"
 #include "Miriya/Events/ApplicationEvent.h"
 #include "Miriya/Events/MouseEvent.h"
 #include "Miriya/Events/KeyEvent.h"

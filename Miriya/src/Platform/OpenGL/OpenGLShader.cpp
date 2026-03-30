@@ -2,9 +2,9 @@
 #include "OpenGLShader.h"
 
 #include <fstream>
-#include <GLAD/gl.h>
+#include <glad/gl.h>
 
-#include "Miriya/Log.h"
+#include "../../Miriya/Core/Log.h"
 
 #include <glm/gtc/type_ptr.hpp>
 

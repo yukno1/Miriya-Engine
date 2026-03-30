@@ -1,11 +1,11 @@
 #include "mirpch.h"
-#include "Miriya/Application.h"
+#include "Application.h"
 
-#include "Miriya/Log.h"
+#include "Log.h"
 
 #include "Miriya/Renderer/Renderer.h"
 
-#include "Miriya/Input.h"
+#include "Input.h"
 
 #include <GLFW/glfw3.h>
 

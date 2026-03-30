@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Miriya/Core.h"
+#include "Core.h"
 
 namespace Miriya {
     class MIR_API Input {

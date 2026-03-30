@@ -4,7 +4,7 @@
 #include "glad/gl.h"
 #include <GLFW/glfw3.h>
 
-#include "Miriya/Log.h"
+#include "../../Miriya/Core/Log.h"
 
 namespace Miriya {
     OpenGLContext::OpenGLContext(GLFWwindow *windowHandle)
