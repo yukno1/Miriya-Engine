@@ -17,6 +17,7 @@
 
 // --------Renderer Related--------------------
 #include "Miriya/Renderer/Renderer.h"
+#include "Miriya/Renderer/Renderer2D.h"
 #include "Miriya/Renderer/RenderCommand.h"
 
 #include "Miriya/Renderer/Buffer.h"
