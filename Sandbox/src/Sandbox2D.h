@@ -20,6 +20,8 @@ private:
     Miriya::Ref<Miriya::VertexArray> m_SquareVA;
     Miriya::Ref<Miriya::Shader> m_FlatColorShader;
 
+    Miriya::Ref<Miriya::Texture2D> m_CheckerboardTexture;
+
     glm::vec4 m_SquareColor = { 0.2f, 0.3f, 0.8f, 1.0f };
 };
 

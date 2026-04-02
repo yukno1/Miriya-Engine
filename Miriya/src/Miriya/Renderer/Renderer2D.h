@@ -1,6 +1,7 @@
 #pragma once
 
 #include "OrthographicCamera.h"
+#include "Texture.h"
 
 namespace Miriya {
 
@@ -15,7 +16,7 @@ namespace Miriya {
         // Primitives
         static void DrawQuad(const glm::vec2& position, const glm::vec2& size, const glm::vec4& color);
         static void DrawQuad(const glm::vec3& position, const glm::vec2& size, const glm::vec4& color);
+        static void DrawQuad(const glm::vec2& position, const glm::vec2& size, Ref<Texture2D>& texture);
+        static void DrawQuad(const glm::vec3& position, const glm::vec2& size, Ref<Texture2D>& texture);
     };
-
 } // Miriya
-
