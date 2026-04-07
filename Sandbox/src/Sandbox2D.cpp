@@ -5,8 +5,6 @@
 #include "glm/gtc/type_ptr.hpp"
 #include "Miriya/Renderer/Renderer2D.h"
 
-#include "Platform/OpenGL/OpenGLShader.h"
-
 Sandbox2D::Sandbox2D() : Layer("Sandbox2D"), m_CameraController(1280.0f / 720.0f) {
 }
 
