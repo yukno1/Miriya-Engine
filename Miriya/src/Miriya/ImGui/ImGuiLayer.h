@@ -21,7 +21,7 @@ namespace Miriya {
         void End();
 
         // enclose layer
-        void OnImGuiRender() override;
+        // void OnImGuiRender() override;
     private:
         float m_Time = 0.0f;
     };

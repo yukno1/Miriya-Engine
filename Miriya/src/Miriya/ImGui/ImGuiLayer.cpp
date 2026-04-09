@@ -86,8 +86,9 @@ namespace Miriya {
         }
     }
 
-    void ImGuiLayer::OnImGuiRender() {
-        static bool show = true;
-        ImGui::ShowDemoWindow(&show);
-    }
+    // void ImGuiLayer::OnImGuiRender() {
+    //     static bool show = true;
+            // show menu
+    //     ImGui::ShowDemoWindow(&show);
+    // }
 } //Miriya
