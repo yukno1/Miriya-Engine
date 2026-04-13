@@ -113,7 +113,7 @@ if(MSVC)
 
     if (CMAKE_BUILD_TYPE STREQUAL "Debug")
         target_compile_definitions(${PROJECT_NAME} PRIVATE MIR_DEBUG)
-        target_compile_options(${PROJECT_NAME} PRIVATE /Od /Zi)
+        target_compile_options(${PROJECT_NAME} PRIVATE /Od)
         target_link_libraries(${PROJECT_NAME} PRIVATE
                 ${Library_ShaderC_Debug}
                 ${Library_SPIRV_Cross_Debug}

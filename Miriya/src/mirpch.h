@@ -13,7 +13,7 @@
 #include <unordered_map>
 #include <unordered_set>
 
-
+#include "Miriya/Debug/Instrumentor.h"
 
 #ifndef MIR_PLATFORM_WINDOWS
     #include <Windows.h>
