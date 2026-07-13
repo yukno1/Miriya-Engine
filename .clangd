@@ -1,0 +1,14 @@
+# 告诉 clangd CMake 生成的编译数据库在哪。
+# （它在 build/ 目录里，而 clangd 默认只搜源文件的父目录链，所以找不到。）
+CompileFlags:
+  CompilationDatabase: build
+
+  # 没有匹配编译命令的文件的兜底宏定义
+  # （独立打开头文件，或 cmake 配置之前的全新克隆场景）。
+  # 与 Miriya/CMakeLists.txt 中的 add_compile_definitions() 对应。
+  Add:
+    - -DMIR_PLATFORM_WINDOWS
+    - -DMIR_BUILD_DLL
+    - -DMIR_DEBUG
+    - -DMIR_ENABLE_ASSERTS
+    - -D_MBCS

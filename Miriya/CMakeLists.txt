@@ -44,10 +44,10 @@ add_compile_definitions(MIR_PLATFORM_WINDOWS)
 add_compile_definitions(MIR_BUILD_DLL)
 add_compile_definitions(MIR_ENABLE_ASSERTS)
 
-add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
-        COMMAND ${CMAKE_COMMAND} -E copy_if_different
-        "${PROJECT_SOURCE_DIR}/vendor/GLFW/lib/glfw3.dll"
-        $<TARGET_FILE_DIR:${PROJECT_NAME}>)
+# add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
+#         COMMAND ${CMAKE_COMMAND} -E copy_if_different
+#         "${PROJECT_SOURCE_DIR}/vendor/GLFW/lib/glfw3.dll"
+#         $<TARGET_FILE_DIR:${PROJECT_NAME}>)
 
 #target_compile_definitions(${PROJECT_NAME} PRIVATE
 #        _CRT_SECURE_NO_WARNINGS
@@ -63,12 +63,13 @@ add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
 #        ${CMAKE_CURRENT_SOURCE_DIR}/src
 #        ${CMAKE_SOURCE_DIR}/Miriya/vendor/spdlog/include
 #)
-
+# echo("IncludeDir_Glfw: ${IncludeDir_Glfw}")
 target_include_directories(${PROJECT_NAME} PRIVATE
         src
         vendor/spdlog/include
         vendor
-        vendor/GLFW
+        # vendor/glfw-3.4/include/GLFW
+        # ${IncludeDir_Glfw}
         ${IncludeDir_Glad}
 #        vendor/GLAD/include
 #        ${IncludeDir_Box2D}
@@ -89,7 +90,8 @@ target_include_directories(${PROJECT_NAME} PRIVATE
 target_link_libraries(${PROJECT_NAME} PRIVATE
 #        box2d
         glad
-        ${CMAKE_CURRENT_SOURCE_DIR}/vendor/GLFW/lib/libglfw3dll.a  # use prebuilt
+        # ${CMAKE_CURRENT_SOURCE_DIR}/vendor/GLFW/lib/libglfw3.a  # use prebuilt
+        glfw
         imgui
 #        yaml-cpp
         # ${Library_mono}
