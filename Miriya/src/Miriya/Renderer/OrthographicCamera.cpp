@@ -1,5 +1,5 @@
 #include "mirpch.h"
-#include "OrthographicCamera.h"
+#include "Miriya/Renderer/OrthographicCamera.h"
 
 #include <glm/gtc/matrix_transform.hpp>
 

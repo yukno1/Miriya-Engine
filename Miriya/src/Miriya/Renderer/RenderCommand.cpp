@@ -1,10 +1,8 @@
 #include "mirpch.h"
-#include "RenderCommand.h"
-
-#include "Platform/OpenGL/OpenGLRendererAPI.h"
+#include "Miriya/Renderer/RenderCommand.h"
 
 namespace Miriya {
 
-    // future dynamically setting renderer API
-    RendererAPI * RenderCommand::s_RendererAPI = new OpenGLRendererAPI();
-}
+// future dynamically setting renderer API
+Scope<RendererAPI> RenderCommand::s_RendererAPI = RendererAPI::Create();
+}   // namespace Miriya

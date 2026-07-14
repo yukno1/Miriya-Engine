@@ -1,6 +1,7 @@
 #pragma once
 
 // For use by Miriya applications
+#include "Miriya/Core/Core.h"
 
 #include "../src/Miriya/Core/Application.h"
 #include "Miriya/Core/Layer.h"
@@ -11,7 +12,7 @@
 #include "../src/Miriya/Core/Input.h"
 #include "Miriya/Core/Keycodes.h"
 #include "../src/Miriya/Core/MouseButtonCodes.h"
-#include "Miriya/OrthographicCameraController.h"
+#include "Miriya/Renderer/OrthographicCameraController.h"
 
 #include "Miriya/ImGui/ImGuiLayer.h"
 
@@ -27,4 +28,3 @@
 
 #include "Miriya/Renderer/OrthographicCamera.h"
 // ---------------------------------------------
-

@@ -7,22 +7,23 @@
 
 namespace Miriya {
 
-    class MIR_API ImGuiLayer : public Layer {
-    public:
-        ImGuiLayer();
-        ~ImGuiLayer();
+class ImGuiLayer : public Layer
+{
+public:
+    ImGuiLayer();
+    ~ImGuiLayer();
 
-        void OnAttach() override;
-        void OnDetach() override;
+    void OnAttach() override;
+    void OnDetach() override;
 
-        // Enable layer to imgui rendering independently
-        // begin a new window
-        void Begin();
-        void End();
+    // Enable layer to imgui rendering independently
+    // begin a new window
+    void Begin();
+    void End();
 
-        // enclose layer
-        // void OnImGuiRender() override;
-    private:
-        float m_Time = 0.0f;
-    };
-} // Miriya
+    // enclose layer
+    // void OnImGuiRender() override;
+private:
+    float m_Time = 0.0f;
+};
+}   // namespace Miriya

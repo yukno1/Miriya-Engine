@@ -7,39 +7,45 @@ struct GLFWwindow;
 
 namespace Miriya {
 
-    class WindowsWindow : public Window {
-    public:
-        explicit WindowsWindow(const WindowProps& props);
-        virtual ~WindowsWindow();
+class WindowsWindow : public Window
+{
+public:
+    explicit WindowsWindow(const WindowProps& props);
+    virtual ~WindowsWindow();
 
-        void OnUpdate() override;
+    void OnUpdate() override;
 
-        [[nodiscard]] inline unsigned int GetWidth() const override { return m_Data.Width; }
-        [[nodiscard]] inline unsigned int GetHeight() const override { return m_Data.Height; }
+    [[nodiscard]] inline unsigned int GetWidth() const override { return m_Data.Width; }
+    [[nodiscard]] inline unsigned int GetHeight() const override { return m_Data.Height; }
 
-        // Window attributes
-        inline void SetEventCallback(const EventCallbackFn& callback) override { m_Data.EventCallback = callback; }
-        void SetVSync(bool enabled) override;
-        [[nodiscard]] bool IsVSync() const override;
+    // Window attributes
+    inline void SetEventCallback(const EventCallbackFn& callback) override
+    {
+        m_Data.EventCallback = callback;
+    }
+    void               SetVSync(bool enabled) override;
+    [[nodiscard]] bool IsVSync() const override;
 
-        inline void* GetNativeWindow() const override { return m_Window; };
-    private:
-        virtual void Init(const WindowProps& props);
-        virtual void Shutdown();
+    inline void* GetNativeWindow() const override { return m_Window; };
 
-        GLFWwindow* m_Window;
-        GraphicsContext* m_Context;
+private:
+    virtual void Init(const WindowProps& props);
+    virtual void Shutdown();
 
-        // might be requested when glfw callback
-        // group window-specific data, so no need to return whole class
-        struct WindowData {
-            std::string Title;
-            unsigned int Width, Height;
-            bool VSync;
+    GLFWwindow*            m_Window;
+    Scope<GraphicsContext> m_Context;
 
-            EventCallbackFn EventCallback;
-        };
+    // might be requested when glfw callback
+    // group window-specific data, so no need to return whole class
+    struct WindowData
+    {
+        std::string  Title;
+        unsigned int Width, Height;
+        bool         VSync;
 
-        WindowData m_Data;
+        EventCallbackFn EventCallback;
     };
-}
+
+    WindowData m_Data;
+};
+}   // namespace Miriya

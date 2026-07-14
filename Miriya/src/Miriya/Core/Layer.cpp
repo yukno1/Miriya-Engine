@@ -1,14 +1,11 @@
 #include "mirpch.h"
-#include "Layer.h"
+#include "Miriya/Core/Layer.h"
 
 namespace Miriya {
 
-    Layer::Layer(const std::string& debugName)
-        : m_DebugName(debugName) {
+Layer::Layer(const std::string& debugName)
+    : m_DebugName(debugName)
+{}
 
-    }
-
-    Layer::~Layer() {
-
-    }
-}
+Layer::~Layer() {}
+}   // namespace Miriya
