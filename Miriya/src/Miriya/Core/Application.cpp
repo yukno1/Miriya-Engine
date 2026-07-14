@@ -99,14 +99,10 @@ void Application::Run()
     }
 }
 
-bool Application::OnWindowClose(WindowCloseEvent& e)
-{
-    m_Running = false;
-    return true;
-}
-
 bool Application::OnWindowResize(WindowResizeEvent& e)
 {
+    MIR_PROFILE_FUNCTION();
+
     if (e.GetWidth() == 0 || e.GetHeight() == 0) {
         m_Minimized = true;
         return false;
@@ -116,5 +112,11 @@ bool Application::OnWindowResize(WindowResizeEvent& e)
     Renderer::OnWindowResize(e.GetWidth(), e.GetHeight());
 
     return false;
+}
+
+bool Application::OnWindowClose(WindowCloseEvent& e)
+{
+    m_Running = false;
+    return true;
 }
 }   // namespace Miriya

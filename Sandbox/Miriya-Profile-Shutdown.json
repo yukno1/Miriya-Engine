@@ -1,1 +1,1 @@
-{"otherData": {},"traceEvents":[]}
+{"otherData": {},"traceEvents":[{"cat":"function","dur":28,"name":"__thiscall Miriya::OpenGLTexture2D::~OpenGLTexture2D(void)","ph":"X","pid":0,"tid":3300806559,"ts":24931222491},{"cat":"function","dur":47272,"name":"void __thiscall Miriya::WindowsWindow::Shutdown(void)","ph":"X","pid":0,"tid":3300806559,"ts":24931222558},{"cat":"function","dur":47372,"name":"__thiscall Miriya::WindowsWindow::~WindowsWindow(void)","ph":"X","pid":0,"tid":3300806559,"ts":24931222558}]}

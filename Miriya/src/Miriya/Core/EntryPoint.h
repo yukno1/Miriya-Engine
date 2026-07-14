@@ -1,14 +1,16 @@
 #pragma once
 #include "Miriya/Core/Core.h"
+#include "Miriya/Core/Application.h"
 
 #ifdef MIR_PLATFORM_WINDOWS
 
 // function returns the application
 // creation is implemented in client
 // extern means find in somewhere else
-//extern Miriya::Application* Miriya::CreateApplication();
+// extern Miriya::Application* Miriya::CreateApplication();
 
-int main(int argc, char** argv) {
+int main(int argc, char** argv)
+{
 
     // For test, Later move into App
     Miriya::Log::Init();

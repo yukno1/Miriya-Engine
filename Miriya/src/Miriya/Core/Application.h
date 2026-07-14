@@ -7,47 +7,45 @@
 #include "Miriya/Events/Event.h"
 #include "Miriya/Events/ApplicationEvent.h"
 
-#include "Miriya/Core/Timestep.h"
+// #include "Miriya/Core/Timestep.h"
 
 #include "Miriya/ImGui/ImGuiLayer.h"
 
 namespace Miriya {
-    class MIR_API Application {
-    public:
-        Application();
-        virtual ~Application();
+class MIR_API Application
+{
+public:
+    Application();
+    virtual ~Application();
 
-        void Run();
+    void Run();
 
-        void OnEvent(Event& e);
+    void OnEvent(Event& e);
 
-        void PushLayer(Layer* layer);
-        void PushOverlay(Layer* overlay);
+    void PushLayer(Layer* layer);
+    void PushOverlay(Layer* overlay);
 
-        inline static Application& Get() { return *s_Instance; }
-        inline Window& GetWindow() { return *m_Window; }
-    private:
-        bool OnWindowClose(WindowCloseEvent& e);
-        bool OnWindowResize(WindowResizeEvent& e);
+    inline static Application& Get() { return *s_Instance; }
+    inline Window&             GetWindow() { return *m_Window; }
 
-        std::unique_ptr<Window> m_Window;
-        // imgui layer automatically added by Miriya runtime
-        ImGuiLayer* m_ImGuiLayer;
+private:
+    bool OnWindowClose(WindowCloseEvent& e);
+    bool OnWindowResize(WindowResizeEvent& e);
 
-        bool m_Running = true;
-        bool m_Minimized = false;
-        LayerStack m_LayerStack;
+    std::unique_ptr<Window> m_Window;
+    // imgui layer automatically added by Miriya runtime
+    ImGuiLayer* m_ImGuiLayer;
 
-        // Timestep m_Timestep;
-        float m_LastFrameTime = 0.0f;
+    bool       m_Running   = true;
+    bool       m_Minimized = false;
+    LayerStack m_LayerStack;
 
-        static Application* s_Instance;
-    };
+    // Timestep m_Timestep;
+    float m_LastFrameTime = 0.0f;
 
-    // To be defined in client
-    Application* CreateApplication();
-} // Miriya
+    static Application* s_Instance;
+};
 
-
-
-
+// To be defined in client
+Application* CreateApplication();
+}   // namespace Miriya

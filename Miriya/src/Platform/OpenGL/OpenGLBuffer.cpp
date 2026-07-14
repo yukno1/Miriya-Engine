@@ -5,50 +5,73 @@
 
 namespace Miriya {
 
-    /////////////////////////////////////////////////////////////////////////////////////////
-    ////////////////////////////////// Vertex Buffer ////////////////////////////////////////
-    /////////////////////////////////////////////////////////////////////////////////////////
-    OpenGLVertexBuffer::OpenGLVertexBuffer(float *vertices, uint32_t size) {
-        glCreateBuffers(1, &m_RendererID);
-        glBindBuffer(GL_ARRAY_BUFFER, m_RendererID);
-        // static draw means we don't need to update the buffer
-        // not streaming
-        glBufferData(GL_ARRAY_BUFFER, size, vertices, GL_STATIC_DRAW);
-    }
+/////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////// Vertex Buffer ////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////
+OpenGLVertexBuffer::OpenGLVertexBuffer(float* vertices, uint32_t size)
+{
+    MIR_PROFILE_FUNCTION();
 
-    OpenGLVertexBuffer::~OpenGLVertexBuffer() {
-        glDeleteBuffers(1, &m_RendererID);
-    }
+    glCreateBuffers(1, &m_RendererID);
+    glBindBuffer(GL_ARRAY_BUFFER, m_RendererID);
+    // static draw means we don't need to update the buffer
+    // not streaming
+    glBufferData(GL_ARRAY_BUFFER, size, vertices, GL_STATIC_DRAW);
+}
 
-    void OpenGLVertexBuffer::Bind() const {
-        glBindBuffer(GL_ARRAY_BUFFER, m_RendererID);
-    }
+OpenGLVertexBuffer::~OpenGLVertexBuffer()
+{
+    MIR_PROFILE_FUNCTION();
 
-    void OpenGLVertexBuffer::Unbind() const {
-        glBindBuffer(GL_ARRAY_BUFFER, 0);
-    }
+    glDeleteBuffers(1, &m_RendererID);
+}
+
+void OpenGLVertexBuffer::Bind() const
+{
+    MIR_PROFILE_FUNCTION();
+
+    glBindBuffer(GL_ARRAY_BUFFER, m_RendererID);
+}
+
+void OpenGLVertexBuffer::Unbind() const
+{
+    MIR_PROFILE_FUNCTION();
+
+    glBindBuffer(GL_ARRAY_BUFFER, 0);
+}
 
 
-    /////////////////////////////////////////////////////////////////////////////////////////
-    ////////////////////////////////// Index Buffer /////////////////////////////////////////
-    /////////////////////////////////////////////////////////////////////////////////////////
-    OpenGLIndexBuffer::OpenGLIndexBuffer(uint32_t *indices, uint32_t count)
-        : m_Count(count) {
-        glCreateBuffers(1, &m_RendererID);
-        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_RendererID);
-        glBufferData(GL_ELEMENT_ARRAY_BUFFER, count * sizeof(uint32_t), indices, GL_STATIC_DRAW);
+/////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////// Index Buffer /////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////
+OpenGLIndexBuffer::OpenGLIndexBuffer(uint32_t* indices, uint32_t count)
+    : m_Count(count)
+{
+    MIR_PROFILE_FUNCTION();
 
-    }
+    glCreateBuffers(1, &m_RendererID);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_RendererID);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, count * sizeof(uint32_t), indices, GL_STATIC_DRAW);
+}
 
-    OpenGLIndexBuffer::~OpenGLIndexBuffer() {
-        glDeleteBuffers(1, &m_RendererID);
-    }
+OpenGLIndexBuffer::~OpenGLIndexBuffer()
+{
+    MIR_PROFILE_FUNCTION();
 
-    void OpenGLIndexBuffer::Bind() const {
-        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_RendererID);
-    }
+    glDeleteBuffers(1, &m_RendererID);
+}
 
-    void OpenGLIndexBuffer::Unbind() const {
-        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-    }
-} //Miriya
+void OpenGLIndexBuffer::Bind() const
+{
+    MIR_PROFILE_FUNCTION();
+
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_RendererID);
+}
+
+void OpenGLIndexBuffer::Unbind() const
+{
+    MIR_PROFILE_FUNCTION();
+
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+}
+}   // namespace Miriya

@@ -6,40 +6,47 @@
 
 namespace Miriya {
 
-    Renderer::SceneData *Renderer::m_SceneData = new Renderer::SceneData;
+Renderer::SceneData* Renderer::m_SceneData = new Renderer::SceneData;
 
-    void Renderer::Init() {
-        RenderCommand::Init();
-        Renderer2D::Init();
-    }
+void Renderer::Init()
+{
+    MIR_PROFILE_FUNCTION();
 
-    void Renderer::Shutdown()
-    {
-        Renderer2D::Shutdown();
-    }
+    RenderCommand::Init();
+    Renderer2D::Init();
+}
 
-    void Renderer::OnWindowResize(uint32_t width, uint32_t height) {
-        RenderCommand::SetViewport(0, 0, width, height);
-    }
+void Renderer::Shutdown()
+{
+    Renderer2D::Shutdown();
+}
 
-    // make sure shader gets right uniforms
-    // environment map; cube map; camera; light; material; model; etc
-    void Renderer::BeginScene(OrthographicCamera &camera) {
-        m_SceneData->ViewProjectionMatrix = camera.GetViewProjectionMatrix();
-    }
+void Renderer::OnWindowResize(uint32_t width, uint32_t height)
+{
+    RenderCommand::SetViewport(0, 0, width, height);
+}
 
-    void Renderer::EndScene() {
-    }
+// make sure shader gets right uniforms
+// environment map; cube map; camera; light; material; model; etc
+void Renderer::BeginScene(OrthographicCamera& camera)
+{
+    m_SceneData->ViewProjectionMatrix = camera.GetViewProjectionMatrix();
+}
 
-    // submit into render queue
-    void Renderer::Submit(const Ref<Shader> &shader, const Ref<VertexArray> &vertexArray, const glm::mat4 &transform) {
-        shader->Bind();
-        std::dynamic_pointer_cast<OpenGLShader>(shader)->UploadUniformMat4("u_ViewProjection", m_SceneData->ViewProjectionMatrix);
-        // submit per object; queue
-        std::dynamic_pointer_cast<OpenGLShader>(shader)->UploadUniformMat4("u_Transform", transform);
+void Renderer::EndScene() {}
 
-        vertexArray->Bind();
-        // just render command; can't do multiple things
-        RenderCommand::DrawIndexed(vertexArray);
-    }
-} // Miriya
+// submit into render queue
+void Renderer::Submit(const Ref<Shader>& shader, const Ref<VertexArray>& vertexArray,
+                      const glm::mat4& transform)
+{
+    shader->Bind();
+    std::dynamic_pointer_cast<OpenGLShader>(shader)->UploadUniformMat4(
+        "u_ViewProjection", m_SceneData->ViewProjectionMatrix);
+    // submit per object; queue
+    std::dynamic_pointer_cast<OpenGLShader>(shader)->UploadUniformMat4("u_Transform", transform);
+
+    vertexArray->Bind();
+    // just render command; can't do multiple things
+    RenderCommand::DrawIndexed(vertexArray);
+}
+}   // namespace Miriya
