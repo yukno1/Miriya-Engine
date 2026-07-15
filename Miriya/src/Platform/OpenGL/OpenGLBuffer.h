@@ -4,32 +4,39 @@
 
 namespace Miriya {
 
-    class OpenGLVertexBuffer : public VertexBuffer {
-    public:
-        OpenGLVertexBuffer(float *vertices, uint32_t size);
-        virtual ~OpenGLVertexBuffer();
+class OpenGLVertexBuffer : public VertexBuffer
+{
+public:
+    OpenGLVertexBuffer(uint32_t size);
+    OpenGLVertexBuffer(float* vertices, uint32_t size);
+    virtual ~OpenGLVertexBuffer();
 
-        void Bind() const override;
-        void Unbind() const override;
+    void Bind() const override;
+    void Unbind() const override;
 
-        [[nodiscard]] const BufferLayout &GetLayout() const override { return m_Layout; }
-        void SetLayout(const BufferLayout &layout) override { m_Layout = layout; }
-    private:
-        uint32_t m_RendererID;
-        BufferLayout m_Layout;
-    };
+    virtual void SetData(const void* data, uint32_t size) override;
 
-    class OpenGLIndexBuffer : public IndexBuffer {
-    public:
-        OpenGLIndexBuffer(uint32_t *indices, uint32_t count);
-        virtual ~OpenGLIndexBuffer();
+    [[nodiscard]] const BufferLayout& GetLayout() const override { return m_Layout; }
+    void SetLayout(const BufferLayout& layout) override { m_Layout = layout; }
 
-        virtual void Bind() const;
-        virtual void Unbind() const;
+private:
+    uint32_t     m_RendererID;
+    BufferLayout m_Layout;
+};
 
-        virtual uint32_t GetCount() const { return m_Count; }
-    private:
-        uint32_t m_RendererID;
-        uint32_t m_Count;
-    };
-} // Miriya
+class OpenGLIndexBuffer : public IndexBuffer
+{
+public:
+    OpenGLIndexBuffer(uint32_t* indices, uint32_t count);
+    virtual ~OpenGLIndexBuffer();
+
+    virtual void Bind() const;
+    virtual void Unbind() const;
+
+    virtual uint32_t GetCount() const { return m_Count; }
+
+private:
+    uint32_t m_RendererID;
+    uint32_t m_Count;
+};
+}   // namespace Miriya

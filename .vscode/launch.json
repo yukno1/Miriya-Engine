@@ -6,11 +6,11 @@
   "configurations": [
     {
       "name": "Debug",
-      "type": "lldb",
+      "type": "cppvsdbg",
       "request": "launch",
       "program": "${workspaceFolder}/build/bin/Sandbox.exe",
       "args": [],
-      "cwd": "${workspaceFolder}"
+      "cwd": "${workspaceFolder}/build/bin"
     }
   ]
 }
