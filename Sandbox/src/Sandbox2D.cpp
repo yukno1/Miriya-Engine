@@ -16,7 +16,7 @@ void Sandbox2D::OnAttach()
     MIR_PROFILE_FUNCTION();
 
     m_CheckerboardTexture =
-        Miriya::Texture2D::Create("../../Sandbox/assets/textures/Checkerboard.png");
+        Miriya::Texture2D::Create("assets/textures/Checkerboard.png");
 }
 
 void Sandbox2D::OnDetach()

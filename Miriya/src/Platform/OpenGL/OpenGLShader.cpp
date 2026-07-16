@@ -4,7 +4,7 @@
 #include <fstream>
 #include <glad/gl.h>
 
-#include "../../Miriya/Core/Log.h"
+#include "Miriya/Core/Log.h"
 
 #include <glm/gtc/type_ptr.hpp>
 

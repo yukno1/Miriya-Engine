@@ -16,6 +16,13 @@ add_compile_options("$<$<CXX_COMPILER_ID:MSVC>:/utf-8>")
 # Define the executable
 add_executable(${PROJECT_NAME} ${SOURCES})
 
+# 将 Sandbox/assets 目录在构建后复制到可执行文件旁的 assets 目录
+add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
+    COMMAND ${CMAKE_COMMAND} -E copy_directory
+        "${CMAKE_SOURCE_DIR}/Sandbox/assets"
+        $<TARGET_FILE_DIR:${PROJECT_NAME}>/assets
+)
+
 target_include_directories(${PROJECT_NAME} PRIVATE
         ${CMAKE_SOURCE_DIR}/Miriya/vendor/spdlog/include
         ${CMAKE_SOURCE_DIR}/Miriya/src
