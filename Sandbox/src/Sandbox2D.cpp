@@ -33,6 +33,7 @@ void Sandbox2D::OnUpdate(Miriya::Timestep ts)
 
 
     // Render
+    Miriya::Renderer2D::ResetStats();
     {
         MIR_PROFILE_SCOPE("Renderer Prep");
         Miriya::RenderCommand::SetClearColor({0.1f, 0.1f, 0.1f, 1});
@@ -52,9 +53,18 @@ void Sandbox2D::OnUpdate(Miriya::Timestep ts)
         // Miriya::Renderer2D::DrawQuad(
         //     {0.0f, 0.0f, -0.1f}, {10.0f, 10.0f}, m_CheckerboardTexture, 10.0f);
         Miriya::Renderer2D::DrawQuad(
-            {0.0f, 0.0f, -0.1f}, {10.0f, 10.0f}, m_CheckerboardTexture, 10.0f);
+            {0.0f, 0.0f, -0.1f}, {20.0f, 20.0f}, m_CheckerboardTexture, 10.0f);
         Miriya::Renderer2D::DrawRotatedQuad(
             {-2.0f, 0.0f, 0.0f}, {1.0f, 1.0f}, rotation, m_CheckerboardTexture, 20.0f);
+        Miriya::Renderer2D::EndScene();
+
+        Miriya::Renderer2D::BeginScene(m_CameraController.GetCamera());
+        for (float y = -5.0f; y < 5.0f; y += 0.5f) {
+            for (float x = -5.0f; x < 5.0f; x += 0.5f) {
+                glm::vec4 color = {(x + 5.0f) / 10.0f, 0.4f, (y + 5.0f) / 10.0f, 0.7f};
+                Miriya::Renderer2D::DrawQuad({x, y}, {0.45f, 0.45f}, color);
+            }
+        }
         Miriya::Renderer2D::EndScene();
     }
 
@@ -69,6 +79,14 @@ void Sandbox2D::OnImGuiRender()
     MIR_PROFILE_FUNCTION();
 
     ImGui::Begin("Settings");
+
+    auto stats = Miriya::Renderer2D::GetStats();
+    ImGui::Text("Renderer2D Stats:");
+    ImGui::Text("Draw Calls: %d", stats.DrawCalls);
+    ImGui::Text("Quads: %d", stats.QuadCount);
+    ImGui::Text("Vertices: %d", stats.GetTotalVertexCount());
+    ImGui::Text("Indices: %d", stats.GetTotalIndexCount());
+
     ImGui::ColorEdit4("Square Color", glm::value_ptr(m_SquareColor));
 
     ImGui::End();
