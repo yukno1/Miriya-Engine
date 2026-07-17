@@ -21,11 +21,6 @@ static void GLFWErrorCallback(int error, const char* description)
     MIR_CORE_ERROR("GLFW Error ({0}): {1}", error, description);
 }
 
-Scope<Window> Window::Create(const WindowProps& props)
-{
-    return CreateScope<WindowsWindow>(props);
-}
-
 WindowsWindow::WindowsWindow(const WindowProps& props)
 {
     MIR_PROFILE_FUNCTION();

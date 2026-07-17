@@ -21,6 +21,7 @@ private:
     // Temp
     Miriya::Ref<Miriya::VertexArray> m_SquareVA;
     Miriya::Ref<Miriya::Shader>      m_FlatColorShader;
+    Miriya::Ref<Miriya::Framebuffer> m_Framebuffer;
 
     Miriya::Ref<Miriya::Texture2D> m_CheckerboardTexture;
 

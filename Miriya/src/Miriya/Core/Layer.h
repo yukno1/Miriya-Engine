@@ -2,8 +2,8 @@
 
 #include <string>
 
-#include "Core.h"
-#include "../Events/Event.h"
+#include "Miriya/Core/Base.h"
+#include "Miriya/Events/Event.h"
 #include "Timestep.h"
 
 namespace Miriya {

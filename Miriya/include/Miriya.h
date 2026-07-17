@@ -1,7 +1,7 @@
 #pragma once
 
 // For use by Miriya applications
-#include "Miriya/Core/Core.h"
+#include "Miriya/Core/Base.h"
 
 #include "../src/Miriya/Core/Application.h"
 #include "Miriya/Core/Layer.h"
@@ -23,6 +23,7 @@
 
 #include "Miriya/Renderer/Buffer.h"
 #include "Miriya/Renderer/Shader.h"
+#include "Miriya/Renderer/Framebuffer.h"
 #include "Miriya/Renderer/Texture.h"
 #include "Miriya/Renderer/VertexArray.h"
 

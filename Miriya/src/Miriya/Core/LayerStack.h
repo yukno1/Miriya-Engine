@@ -1,11 +1,11 @@
 #pragma once
 
-#include "Miriya/Core/Core.h"
+#include "Miriya/Core/Base.h"
 #include "Miriya/Core/Layer.h"
 
 namespace Miriya {
 
-class MIR_API LayerStack
+class LayerStack
 {
 public:
     LayerStack() = default;

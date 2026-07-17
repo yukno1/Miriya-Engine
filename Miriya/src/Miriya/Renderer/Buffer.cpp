@@ -3,7 +3,7 @@
 #include "Platform/OpenGL/OpenGLBuffer.h"
 
 #include "Miriya/Renderer/Renderer.h"
-#include "Miriya/Core/Core.h"
+#include "Miriya/Core/Base.h"
 
 namespace Miriya {
 

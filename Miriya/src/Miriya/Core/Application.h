@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Core.h"
+#include "Base.h"
 
 #include "Window.h"
 #include "LayerStack.h"
@@ -12,7 +12,7 @@
 #include "Miriya/ImGui/ImGuiLayer.h"
 
 namespace Miriya {
-class MIR_API Application
+class Application
 {
 public:
     Application();

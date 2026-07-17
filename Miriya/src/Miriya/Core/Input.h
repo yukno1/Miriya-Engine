@@ -1,9 +1,9 @@
 #pragma once
 
-#include "Core.h"
+#include "Miriya/Core/Base.h"
 
 namespace Miriya {
-class MIR_API Input
+class Input
 {
 public:
     static bool IsKeyPressed(int keycode) { return s_Instance->IsKeyPressedImpl(keycode); }

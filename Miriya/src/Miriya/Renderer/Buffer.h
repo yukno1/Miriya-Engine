@@ -1,5 +1,5 @@
 #pragma once
-#include "Miriya/Core/Core.h"
+#include "Miriya/Core/Base.h"
 
 
 namespace Miriya {

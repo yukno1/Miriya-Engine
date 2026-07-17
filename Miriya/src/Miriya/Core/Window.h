@@ -2,7 +2,7 @@
 
 #include "mirpch.h"
 
-#include "Core.h"
+#include "Miriya/Core/Base.h"
 #include "Miriya/Events/Event.h"
 
 namespace Miriya {

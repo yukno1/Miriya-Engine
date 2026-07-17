@@ -1,6 +1,6 @@
 ﻿#pragma once
 
-#include "Miriya/Core/Core.h"
+#include "Miriya/Core/Base.h"
 
 #include "spdlog/spdlog.h"
 #include "spdlog/fmt/ostr.h"
