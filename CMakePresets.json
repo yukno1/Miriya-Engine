@@ -19,8 +19,7 @@
       "cacheVariables": {
         "CMAKE_BUILD_TYPE": "Debug",
         "CMAKE_CXX_COMPILER": "cl.exe"
-      },
-      "cwd": "${sourceDir}"
+      }
     },
     {
       "name": "x64-release",

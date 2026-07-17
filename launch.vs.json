@@ -1,0 +1,13 @@
+{
+  "version": "0.2.1",
+  "defaults": {},
+  "configurations": [
+    {
+      "type": "default",
+      "project": "out\\build\\x64-debug\\bin\\Sandbox.exe",
+      "projectTarget": "Sandbox.exe (bin\\Sandbox.exe)",
+      "name": "Sandbox.exe",
+      "currentDir": "E:\\GameEngine\\Miriya-Engine\\Sandbox"
+    }
+  ]
+}

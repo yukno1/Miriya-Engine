@@ -291,7 +291,7 @@ void Renderer2D::DrawRotatedQuad(const glm::vec3& position, const glm::vec2& siz
     const float tilingFactor = 1.0f;
 
     glm::mat4 transform = glm::translate(glm::mat4(1.0f), position) *
-                          glm::rotate(glm::mat4(1.0f), glm::radians(rotation), {0.0f, 0.0f, 1.0f}) *
+                          glm::rotate(glm::mat4(1.0f), rotation, {0.0f, 0.0f, 1.0f}) *
                           glm::scale(glm::mat4(1.0f), {size.x, size.y, 1.0f});
 
     s_Data.QuadVertexBufferPtr->Position     = transform * s_Data.QuadVertexPositions[0];
@@ -362,7 +362,7 @@ void Renderer2D::DrawRotatedQuad(const glm::vec3& position, const glm::vec2& siz
     }
 
     glm::mat4 transform = glm::translate(glm::mat4(1.0f), position) *
-                          glm::rotate(glm::mat4(1.0f), glm::radians(rotation), {0.0f, 0.0f, 1.0f}) *
+                          glm::rotate(glm::mat4(1.0f), rotation, {0.0f, 0.0f, 1.0f}) *
                           glm::scale(glm::mat4(1.0f), {size.x, size.y, 1.0f});
 
     s_Data.QuadVertexBufferPtr->Position     = transform * s_Data.QuadVertexPositions[0];

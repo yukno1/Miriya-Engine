@@ -50,6 +50,11 @@ void Application::PushOverlay(Layer* layer)
     layer->OnAttach();
 }
 
+void Application::Close()
+{
+    m_Running = false;
+}
+
 void Application::OnEvent(Event& e)
 {
     MIR_PROFILE_FUNCTION();
