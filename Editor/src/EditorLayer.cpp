@@ -1,4 +1,5 @@
 #include "EditorLayer.h"
+#include "glm/trigonometric.hpp"
 #include <imgui/imgui.h>
 
 #include <glm/gtc/matrix_transform.hpp>
@@ -52,13 +53,16 @@ void EditorLayer::OnUpdate(Miriya::Timestep ts)
         MIR_PROFILE_SCOPE("Renderer Draw");
         Miriya::Renderer2D::BeginScene(m_CameraController.GetCamera());
         Miriya::Renderer2D::DrawRotatedQuad(
-            {1.0f, 0.0f}, {0.8f, 0.8f}, -45.0f, {0.8f, 0.2f, 0.3f, 1.0f});
+            {1.0f, 0.0f}, {0.8f, 0.8f}, glm::radians(-45.0f), {0.8f, 0.2f, 0.3f, 1.0f});
         Miriya::Renderer2D::DrawQuad({-1.0f, 0.0f}, {0.8f, 0.8f}, {0.8f, 0.2f, 0.3f, 1.0f});
         Miriya::Renderer2D::DrawQuad({0.5f, -0.5f}, {0.5f, 0.75f}, m_SquareColor);
         Miriya::Renderer2D::DrawQuad(
             {0.0f, 0.0f, -0.1f}, {20.0f, 20.0f}, m_CheckerboardTexture, 10.0f);
-        Miriya::Renderer2D::DrawRotatedQuad(
-            {-2.0f, 0.0f, 0.0f}, {1.0f, 1.0f}, rotation, m_CheckerboardTexture, 20.0f);
+        Miriya::Renderer2D::DrawRotatedQuad({-2.0f, 0.0f, 0.0f},
+                                            {1.0f, 1.0f},
+                                            glm::radians(rotation),
+                                            m_CheckerboardTexture,
+                                            20.0f);
         Miriya::Renderer2D::EndScene();
 
         Miriya::Renderer2D::BeginScene(m_CameraController.GetCamera());

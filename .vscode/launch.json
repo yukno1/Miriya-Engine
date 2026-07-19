@@ -8,11 +8,11 @@
       "name": "Debug",
       "type": "cppvsdbg",
       "request": "launch",
-      // "program": "${workspaceFolder}/out/build/x64-debug/bin/Ruslan.exe",
-      "program": "${workspaceFolder}/out/build/x64-debug/bin/Sandbox.exe",
+      "program": "${workspaceFolder}/out/build/x64-debug/bin/Ruslan.exe",
+      // "program": "${workspaceFolder}/out/build/x64-debug/bin/Sandbox.exe",
       "args": [],
-      // "cwd": "${workspaceFolder}/Editor"
-      "cwd": "${workspaceFolder}/Sandbox"
+      "cwd": "${workspaceFolder}/Editor"
+      // "cwd": "${workspaceFolder}/Sandbox"
     }
   ]
 }
