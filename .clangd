@@ -1,7 +1,7 @@
 # 告诉 clangd CMake 生成的编译数据库在哪。
 # （它在 build/ 目录里，而 clangd 默认只搜源文件的父目录链，所以找不到。）
 CompileFlags:
-  CompilationDatabase: build
+  CompilationDatabase: out/build/x64-debug
 
   # 没有匹配编译命令的文件的兜底宏定义
   # （独立打开头文件，或 cmake 配置之前的全新克隆场景）。

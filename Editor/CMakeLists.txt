@@ -34,11 +34,11 @@ target_link_libraries(${PROJECT_NAME} PRIVATE
     Miriya
 )
 
-if (CMAKE_SYSTEM_NAME STREQUAL "Windows")
-    target_compile_definitions(${PROJECT_NAME} PRIVATE
-        MIR_PLATFORM_WINDOWS
-    )
-endif()
+# if (CMAKE_SYSTEM_NAME STREQUAL "Windows")
+#     target_compile_definitions(${PROJECT_NAME} PRIVATE
+#         MIR_PLATFORM_WINDOWS
+#     )
+# endif()
 
 if (CMAKE_BUILD_TYPE STREQUAL "Debug")
     target_compile_definitions(${PROJECT_NAME} PRIVATE MIR_DEBUG)

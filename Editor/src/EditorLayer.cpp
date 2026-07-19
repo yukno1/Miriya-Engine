@@ -43,6 +43,14 @@ void EditorLayer::OnUpdate(Timestep ts)
 {
     MIR_PROFILE_FUNCTION();
 
+    // Resize
+    if (Miriya::FramebufferSpecification spec = m_Framebuffer->GetSpecification();
+        m_ViewportSize.x > 0.0f && m_ViewportSize.y > 0.0f &&   // zero sized framebuffer is invalid
+        (spec.Width != m_ViewportSize.x || spec.Height != m_ViewportSize.y)) {
+        m_Framebuffer->Resize((uint32_t)m_ViewportSize.x, (uint32_t)m_ViewportSize.y);
+        m_CameraController.OnResize(m_ViewportSize.x, m_ViewportSize.y);
+    }
+
     // Update
     if (m_ViewportFocused) {
         m_CameraController.OnUpdate(ts);
@@ -148,17 +156,21 @@ void EditorLayer::OnImGuiRender()
     Application::Get().GetImGuiLayer()->BlockEvents(!m_ViewportFocused || !m_ViewportHovered);
 
     ImVec2 viewportPanelSize = ImGui::GetContentRegionAvail();
-    if (m_ViewportSize != *((glm::vec2*)&viewportPanelSize) && viewportPanelSize.x > 0 &&
-        viewportPanelSize.y > 0) {
-        m_Framebuffer->Resize(static_cast<uint32_t>(viewportPanelSize.x),
-                              static_cast<uint32_t>(viewportPanelSize.y));
-        m_ViewportSize = {viewportPanelSize.x, viewportPanelSize.y};
+    m_ViewportSize           = {viewportPanelSize.x, viewportPanelSize.y};
 
-        m_CameraController.OnResize(viewportPanelSize.x, viewportPanelSize.y);
-    }
-    uint32_t textureID = m_Framebuffer->GetColorAttachmentRendererID();
-    ImGui::Image(
-        (void*)textureID, ImVec2{m_ViewportSize.x, m_ViewportSize.y}, ImVec2{0, 1}, ImVec2{1, 0});
+    uint32_t textureID =
+        m_Framebuffer
+            ->GetColorAttachmentRendererID();   // 如果你的引擎以后把 GetColorAttachmentRendererID()
+                                                // 的返回类型改成与 ImTextureID 等宽（如
+                                                // uint64_t/GLuint64），连 static_cast
+                                                // 都可以省掉，直接传 textureID 即可。
+
+    // typedef ImU64 ImTextureID;      // Default: store up to 64-bits (any pointer or integer). A
+    // majority of backends are ok with that.
+    ImGui::Image(static_cast<ImTextureID>(textureID),
+                 ImVec2{m_ViewportSize.x, m_ViewportSize.y},
+                 ImVec2{0, 1},
+                 ImVec2{1, 0});
     ImGui::End();
     ImGui::PopStyleVar();
 

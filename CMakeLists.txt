@@ -27,6 +27,7 @@ set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR}/lib)
 add_subdirectory(Miriya/vendor/glfw-3.4)
 add_subdirectory(Miriya/vendor/GLAD)
 add_subdirectory(Miriya/vendor/imgui)
+add_subdirectory(Miriya/vendor/entt)
 #add_subdirectory(Miriya/vendor/yaml-cpp)
 
 # core

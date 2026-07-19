@@ -68,7 +68,7 @@ add_compile_definitions(MIR_BUILD_DLL)
 target_include_directories(${PROJECT_NAME} PUBLIC
         ${CMAKE_SOURCE_DIR}/Miriya/include 
         src
-        vendor/entt
+        vendor/entt/src/entt
         
         PRIVATE
         vendor/spdlog/include
@@ -96,6 +96,7 @@ target_link_libraries(${PROJECT_NAME} PRIVATE
         # ${CMAKE_CURRENT_SOURCE_DIR}/vendor/GLFW/lib/libglfw3.a  # use prebuilt
         glfw
         imgui
+        EnTT::EnTT
 #        yaml-cpp
         # ${Library_mono}
 )
