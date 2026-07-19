@@ -63,6 +63,7 @@ void Application::OnEvent(Event& e)
     dispatcher.Dispatch<WindowCloseEvent>(MIR_BIND_EVENT_FN(Application::OnWindowClose));
     dispatcher.Dispatch<WindowResizeEvent>(MIR_BIND_EVENT_FN(Application::OnWindowResize));
 
+    // reverse iterator
     for (auto it = m_LayerStack.rbegin(); it != m_LayerStack.rend(); ++it) {
         // go backwards stack
         (*it)->OnEvent(e);

@@ -73,10 +73,11 @@ void ImGuiLayer::OnDetach()
 
 void ImGuiLayer::OnEvent(Event& e)
 {
-    // not final
-    ImGuiIO& io = ImGui::GetIO();
-    e.Handled |= e.IsInCategory(EventCategoryMouse) & io.WantCaptureMouse;
-    e.Handled |= e.IsInCategory(EventCategoryKeyboard) & io.WantCaptureKeyboard;
+    if (m_BlockEvents) {
+        ImGuiIO& io = ImGui::GetIO();
+        e.Handled |= e.IsInCategory(EventCategoryMouse) & io.WantCaptureMouse;
+        e.Handled |= e.IsInCategory(EventCategoryKeyboard) & io.WantCaptureKeyboard;
+    }
 }
 
 void ImGuiLayer::Begin()
@@ -108,9 +109,4 @@ void ImGuiLayer::End()
     }
 }
 
-// void ImGuiLayer::OnImGuiRender() {
-//     static bool show = true;
-// show menu
-//     ImGui::ShowDemoWindow(&show);
-// }
 }   // namespace Miriya
