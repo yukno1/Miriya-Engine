@@ -57,6 +57,7 @@
 #    define MIR_DEBUGBREAK()
 #endif
 
+// TODO: Make this macro able to take in no arguments except condition
 #ifdef MIR_ENABLE_ASSERTS
 #    define MIR_ASSERT(x, ...)                                   \
         {                                                        \

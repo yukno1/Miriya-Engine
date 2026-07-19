@@ -35,7 +35,7 @@ target_include_directories(${PROJECT_NAME} PRIVATE
         ${CMAKE_SOURCE_DIR}/Miriya/vendor/Glad
 #        ${IncludeDir_glm}
         ${CMAKE_SOURCE_DIR}/Miriya/vendor/glm
-#        ${IncludeDir_entt}
+        ${CMAKE_SOURCE_DIR}/Miriya/vendor/entt
 )
 
 add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD

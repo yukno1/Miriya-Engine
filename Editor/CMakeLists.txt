@@ -12,6 +12,7 @@ file(GLOB_RECURSE RUSLAN_SOURCES
 
 file(GLOB_RECURSE RUSLAN_HEADERS
     src/*.h
+    ${CMAKE_SOURCE_DIR}/Miriya/vendor/entt/*.hpp
 )
 
 add_executable(${PROJECT_NAME} ${RUSLAN_SOURCES} ${RUSLAN_HEADERS})
@@ -23,9 +24,8 @@ target_include_directories(${PROJECT_NAME} PRIVATE
     ${CMAKE_SOURCE_DIR}/Miriya/include
     ${CMAKE_SOURCE_DIR}/Miriya/vendor/spdlog/include
     ${CMAKE_SOURCE_DIR}/Miriya/vendor
-    ${IncludeDir_entt}
+    ${CMAKE_SOURCE_DIR}/Miriya/vendor/entt
     ${IncludeDir_filewatch}
-    # ${IncludeDir_glm}
     ${CMAKE_SOURCE_DIR}/Miriya/vendor/glm
     ${IncludeDir_ImGuizmo}
 )

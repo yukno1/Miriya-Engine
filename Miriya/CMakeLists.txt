@@ -32,6 +32,7 @@ file(GLOB_RECURSE MIRIYA_HEADERS
         "include/*.h"
         "vendor/stb_image/*.h"
         "vendor/glm/glm/*.hpp"
+        "vendor/entt/*.hpp"
 #        "vendor/ImGuizmo/ImGuizmo.h"
 )
 
@@ -67,6 +68,7 @@ add_compile_definitions(MIR_BUILD_DLL)
 target_include_directories(${PROJECT_NAME} PUBLIC
         ${CMAKE_SOURCE_DIR}/Miriya/include 
         src
+        vendor/entt
         
         PRIVATE
         vendor/spdlog/include
@@ -78,10 +80,8 @@ target_include_directories(${PROJECT_NAME} PUBLIC
 #        ${IncludeDir_Box2D}
 #        ${IncludeDir_filewatch}
         ${IncludeDir_ImGui}
-#        ${IncludeDir_glm}
         vendor/glm
         vendor/stb_image
-#        ${IncludeDir_entt}
 #        ${IncludeDir_mono}
 #        ${IncludeDir_yaml_cpp}
 #        ${IncludeDir_ImGuizmo}
