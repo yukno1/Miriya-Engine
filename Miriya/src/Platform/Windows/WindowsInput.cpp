@@ -1,28 +1,28 @@
 #include "mirpch.h"
-#include "WindowsInput.h"
+#include "Miriya/Core/Input.h"
 
 #include <GLFW/glfw3.h>
-#include "../../Miriya/Core/Application.h"
+#include "Miriya/Core/Application.h"
 
 namespace Miriya {
 
-Scope<Input> Input::s_Instance = CreateScope<WindowsInput>();
+// Scope<Input> Input::s_Instance = CreateScope<WindowsInput>();
 
-bool WindowsInput::IsKeyPressedImpl(int keycode)
+bool Input::IsKeyPressed(int keycode)
 {
     auto window = static_cast<GLFWwindow*>(Application::Get().GetWindow().GetNativeWindow());
     auto state  = glfwGetKey(window, keycode);
     return state == GLFW_PRESS || state == GLFW_REPEAT;
 }
 
-bool WindowsInput::IsMouseButtonPressedImpl(int button)
+bool Input::IsMouseButtonPressed(int button)
 {
     auto window = static_cast<GLFWwindow*>(Application::Get().GetWindow().GetNativeWindow());
     auto state  = glfwGetMouseButton(window, button);
     return state == GLFW_PRESS;
 }
 
-std::pair<float, float> WindowsInput::GetMousePositionImpl()
+std::pair<float, float> Input::GetMousePosition()
 {
     auto   window = static_cast<GLFWwindow*>(Application::Get().GetWindow().GetNativeWindow());
     double xpos, ypos;
@@ -30,15 +30,15 @@ std::pair<float, float> WindowsInput::GetMousePositionImpl()
     return {static_cast<float>(xpos), static_cast<float>(ypos)};
 }
 
-float WindowsInput::GetMouseXImpl()
+float Input::GetMouseX()
 {
-    auto [xpos, ypos] = GetMousePositionImpl();
+    auto [xpos, ypos] = GetMousePosition();
     return xpos;
 }
 
-float WindowsInput::GetMouseYImpl()
+float Input::GetMouseY()
 {
-    auto [xpos, ypos] = GetMousePositionImpl();
+    auto [xpos, ypos] = GetMousePosition();
     return ypos;
 }
 }   // namespace Miriya

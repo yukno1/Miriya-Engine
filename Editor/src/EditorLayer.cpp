@@ -156,7 +156,8 @@ void EditorLayer::OnImGuiRender()
     ImGui::Begin("Viewport");
     ImVec2 viewportPanelSize = ImGui::GetContentRegionAvail();
     if (m_ViewportSize != *((glm::vec2*)&viewportPanelSize)) {
-        m_Framebuffer->Resize((uint32_t)viewportPanelSize.x, (uint32_t)viewportPanelSize.y);
+        m_Framebuffer->Resize(static_cast<uint32_t>(viewportPanelSize.x),
+                              static_cast<uint32_t>(viewportPanelSize.y));
         m_ViewportSize = {viewportPanelSize.x, viewportPanelSize.y};
 
         m_CameraController.OnResize(viewportPanelSize.x, viewportPanelSize.y);

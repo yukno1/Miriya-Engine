@@ -8,6 +8,13 @@
       "projectTarget": "Sandbox.exe (bin\\Sandbox.exe)",
       "name": "Sandbox.exe",
       "currentDir": "E:\\GameEngine\\Miriya-Engine\\Sandbox"
+    },
+    {
+      "type": "default",
+      "project": "out\\build\\x64-debug\\bin\\Ruslan.exe",
+      "projectTarget": "Ruslan.exe (bin\\Ruslan.exe)",
+      "name": "Editor",
+      "currentDir": "E:\\GameEngine\\Miriya-Engine\\Editor"
     }
   ]
 }

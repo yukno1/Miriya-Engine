@@ -10,8 +10,10 @@ file(GLOB_RECURSE SOURCES
         src/*.cpp
 )
 
-add_compile_options("$<$<C_COMPILER_ID:MSVC>:/utf-8>")
-add_compile_options("$<$<CXX_COMPILER_ID:MSVC>:/utf-8>")
+if (MSVC)
+    add_compile_options("$<$<C_COMPILER_ID:MSVC>:/utf-8>")
+    add_compile_options("$<$<CXX_COMPILER_ID:MSVC>:/utf-8>")
+endif ()
 
 # Define the executable
 add_executable(${PROJECT_NAME} ${SOURCES})
@@ -45,13 +47,13 @@ target_link_libraries(${PROJECT_NAME} PRIVATE
     Miriya
 )
 
-add_compile_definitions(MIR_PLATFORM_WINDOWS)
+# add_compile_definitions(MIR_PLATFORM_WINDOWS)
 
-if (CMAKE_SYSTEM_NAME STREQUAL "Windows")
-    target_compile_definitions(${PROJECT_NAME} PRIVATE
-            MIR_DEBUG
-    )
-endif()
+# if (CMAKE_SYSTEM_NAME STREQUAL "Windows")
+#     target_compile_definitions(${PROJECT_NAME} PRIVATE
+#             MIR_DEBUG
+#     )
+# endif()
 
 if (MSVC)
     if (CMAKE_BUILD_TYPE STREQUAL "Debug")

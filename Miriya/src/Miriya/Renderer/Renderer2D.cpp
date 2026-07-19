@@ -272,6 +272,7 @@ void Renderer2D::DrawQuad(const glm::vec3& position, const glm::vec2& size,
     s_Data.Stats.QuadCount++;
 }
 
+// rotation in rad
 void Renderer2D::DrawRotatedQuad(const glm::vec2& position, const glm::vec2& size, float rotation,
                                  const glm::vec4& color)
 {
