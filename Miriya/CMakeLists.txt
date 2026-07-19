@@ -64,8 +64,11 @@ add_compile_definitions(MIR_BUILD_DLL)
 #        ${CMAKE_SOURCE_DIR}/Miriya/vendor/spdlog/include
 #)
 # echo("IncludeDir_Glfw: ${IncludeDir_Glfw}")
-target_include_directories(${PROJECT_NAME} PRIVATE
+target_include_directories(${PROJECT_NAME} PUBLIC
+        ${CMAKE_SOURCE_DIR}/Miriya/include 
         src
+        
+        PRIVATE
         vendor/spdlog/include
         vendor
         # vendor/glfw-3.4/include/GLFW

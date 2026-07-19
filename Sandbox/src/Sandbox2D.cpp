@@ -1,14 +1,13 @@
 #include "Sandbox2D.h"
-#include "glm/trigonometric.hpp"
-#include "imgui/imgui.h"
+#include <imgui/imgui.h>
 
 #include <glm/gtc/matrix_transform.hpp>
-#include "glm/gtc/type_ptr.hpp"
-#include "Miriya/Renderer/Renderer2D.h"
+#include <glm/gtc/type_ptr.hpp>
 
 Sandbox2D::Sandbox2D()
     : Layer("Sandbox2D")
     , m_CameraController(1280.0f / 720.0f)
+    , m_SquareColor({0.2f, 0.3f, 0.8f, 1.0f})
 {}
 
 void Sandbox2D::OnAttach()
@@ -35,7 +34,6 @@ void Sandbox2D::OnUpdate(Miriya::Timestep ts)
     // Update
     m_CameraController.OnUpdate(ts);
 
-
     // Render
     Miriya::Renderer2D::ResetStats();
     {
@@ -52,18 +50,13 @@ void Sandbox2D::OnUpdate(Miriya::Timestep ts)
         MIR_PROFILE_SCOPE("Renderer Draw");
         Miriya::Renderer2D::BeginScene(m_CameraController.GetCamera());
         Miriya::Renderer2D::DrawRotatedQuad(
-            {1.0f, 0.0f}, {0.8f, 0.8f}, glm::radians(-45.0f), {0.8f, 0.2f, 0.3f, 1.0f});
+            {1.0f, 0.0f}, {0.8f, 0.8f}, -45.0f, {0.8f, 0.2f, 0.3f, 1.0f});
         Miriya::Renderer2D::DrawQuad({-1.0f, 0.0f}, {0.8f, 0.8f}, {0.8f, 0.2f, 0.3f, 1.0f});
-        Miriya::Renderer2D::DrawQuad({0.5f, -0.5f}, {0.5f, 0.75f}, {0.2f, 0.3f, 0.8f, 1.0f});
-        // Miriya::Renderer2D::DrawQuad(
-        //     {0.0f, 0.0f, -0.1f}, {10.0f, 10.0f}, m_CheckerboardTexture, 10.0f);
+        Miriya::Renderer2D::DrawQuad({0.5f, -0.5f}, {0.5f, 0.75f}, m_SquareColor);
         Miriya::Renderer2D::DrawQuad(
             {0.0f, 0.0f, -0.1f}, {20.0f, 20.0f}, m_CheckerboardTexture, 10.0f);
-        Miriya::Renderer2D::DrawRotatedQuad({-2.0f, 0.0f, 0.0f},
-                                            {1.0f, 1.0f},
-                                            glm::radians(rotation),
-                                            m_CheckerboardTexture,
-                                            20.0f);
+        Miriya::Renderer2D::DrawRotatedQuad(
+            {-2.0f, 0.0f, 0.0f}, {1.0f, 1.0f}, rotation, m_CheckerboardTexture, 20.0f);
         Miriya::Renderer2D::EndScene();
 
         Miriya::Renderer2D::BeginScene(m_CameraController.GetCamera());
@@ -76,11 +69,6 @@ void Sandbox2D::OnUpdate(Miriya::Timestep ts)
         Miriya::Renderer2D::EndScene();
         m_Framebuffer->Unbind();
     }
-
-    // TODO: Shader::SetMat4, Shader::SetFloat4
-    // std::dynamic_pointer_cast<Miriya::OpenGLShader>(m_FlatColorShader)->Bind();
-    // std::dynamic_pointer_cast<Miriya::OpenGLShader>(m_FlatColorShader)->UploadUniformFloat4("u_Color",
-    // m_SquareColor);
 }
 
 void Sandbox2D::OnImGuiRender()
@@ -140,9 +128,7 @@ void Sandbox2D::OnImGuiRender()
                 // windows, which we can't undo at the moment without finer window depth/z control.
                 // ImGui::MenuItem("Fullscreen", NULL, &opt_fullscreen_persistant);
 
-                if (ImGui::MenuItem("Exit")) {
-                    Miriya::Application::Get().Close();
-                }
+                if (ImGui::MenuItem("Exit")) Miriya::Application::Get().Close();
                 ImGui::EndMenu();
             }
 

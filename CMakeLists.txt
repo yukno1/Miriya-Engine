@@ -2,7 +2,9 @@ cmake_minimum_required(VERSION 3.20)
 project(Miriya)
 
 if (MSVC)
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /MP")
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /MP")
+    add_compile_options("$<$<C_COMPILER_ID:MSVC>:/utf-8>")
+    add_compile_options("$<$<CXX_COMPILER_ID:MSVC>:/utf-8>")
 endif ()
 
 #list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/modules")
@@ -12,7 +14,7 @@ endif ()
 
 # set(CMAKE_GENERATOR_PLATFORM x64)
 set_property(GLOBAL PROPERTY USE_FOLDERS ON)
-set_property(GLOBAL PROPERTY VS_DEBUGGER_WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}")
+# set_property(GLOBAL PROPERTY VS_DEBUGGER_WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}")
 
 # Set output directories for executables and libraries
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR}/bin)
@@ -28,8 +30,8 @@ add_subdirectory(Miriya/vendor/imgui)
 
 # core
 add_subdirectory(Miriya)
-# Tools
-# add_subdirectory(Hazelnut)
+# editor
+add_subdirectory(Editor)
 # Misc
 add_subdirectory(Sandbox)
 

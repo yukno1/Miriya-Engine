@@ -15,7 +15,7 @@ namespace Miriya {
 class Application
 {
 public:
-    Application();
+    Application(const std::string& name = "Miriya App");
     virtual ~Application();
 
     void Run();

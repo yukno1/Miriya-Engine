@@ -13,7 +13,7 @@ namespace Miriya {
 
 Application* Application::s_Instance = nullptr;
 
-Application::Application()
+Application::Application(const std::string& name)
 {
     MIR_PROFILE_FUNCTION();
 
@@ -23,7 +23,7 @@ Application::Application()
     // b/c it's an explicit constructor, we need to type unique ptr
     // unique_ptr means no need to delete the window manually when terminate
     // window since application is obviously a singleton
-    m_Window = std::unique_ptr<Window>(Window::Create());
+    m_Window = Window::Create(WindowProps(name));
     m_Window->SetEventCallback(MIR_BIND_EVENT_FN(Application::OnEvent));
 
     Renderer::Init();
@@ -78,7 +78,7 @@ void Application::Run()
         // main application loop
         MIR_PROFILE_SCOPE("RunLoop");
 
-        auto     time     = static_cast<float>(glfwGetTime());   // TODO: Platform::GetTime()
+        float    time     = static_cast<float>(glfwGetTime());   // TODO: Platform::GetTime()
         Timestep timestep = time - m_LastFrameTime;
         m_LastFrameTime   = time;
 
@@ -86,7 +86,9 @@ void Application::Run()
             {
                 MIR_PROFILE_SCOPE("LayerStack OnUpdate");
 
-                for (Layer* layer : m_LayerStack) layer->OnUpdate(timestep);
+                for (Layer* layer : m_LayerStack) {
+                    layer->OnUpdate(timestep);
+                }
             }
 
             // TODO: do on render thread
@@ -94,7 +96,9 @@ void Application::Run()
             {
                 MIR_PROFILE_SCOPE("LayerStack OnImGuiRender");
 
-                for (Layer* layer : m_LayerStack) layer->OnImGuiRender();
+                for (Layer* layer : m_LayerStack) {
+                    layer->OnImGuiRender();
+                }
             }
             m_ImGuiLayer->End();
         }
