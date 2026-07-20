@@ -2,7 +2,20 @@
 
 #include <glm/glm.hpp>
 
+#include "Miriya/Renderer/Camera.h"
+
 namespace Miriya {
+
+struct TagComponent
+{
+    std::string Tag;
+
+    TagComponent()                    = default;
+    TagComponent(const TagComponent&) = default;
+    TagComponent(const std::string& tag)
+        : Tag(tag)
+    {}
+};
 
 struct TransformComponent
 {
@@ -26,6 +39,18 @@ struct SpriteRendererComponent
     SpriteRendererComponent(const SpriteRendererComponent&) = default;
     SpriteRendererComponent(const glm::vec4& color)
         : Color(color)
+    {}
+};
+
+struct CameraComponent
+{
+    Miriya::Camera Camera;
+    bool           Primary = true;   // TODO: think about moving to Scene
+
+    CameraComponent()                       = default;
+    CameraComponent(const CameraComponent&) = default;
+    CameraComponent(const glm::mat4& projection)
+        : Camera(projection)
     {}
 };
 

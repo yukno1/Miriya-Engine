@@ -17,6 +17,7 @@
 #include "Miriya/ImGui/ImGuiLayer.h"
 
 #include "Miriya/Scene/Scene.h"
+#include "Miriya/Scene/Entity.h"
 #include "Miriya/Scene/Components.h"
 
 // --------Renderer Related--------------------

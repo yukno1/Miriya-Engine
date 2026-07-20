@@ -47,16 +47,6 @@ add_compile_definitions(MIR_BUILD_DLL)
 #        GLFW_INCLUDE_NONE
 #)
 
-# Set include directories
-#target_include_directories(Miriya
-#        PUBLIC
-#        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
-#        $<INSTALL_INTERFACE:include>
-#        PRIVATE
-#        ${CMAKE_CURRENT_SOURCE_DIR}/src
-#        ${CMAKE_SOURCE_DIR}/Miriya/vendor/spdlog/include
-#)
-# echo("IncludeDir_Glfw: ${IncludeDir_Glfw}")
 target_include_directories(${PROJECT_NAME} PUBLIC
         ${CMAKE_SOURCE_DIR}/Miriya/include 
         ${CMAKE_SOURCE_DIR}/Miriya/src   
