@@ -26,22 +26,22 @@ add_executable(${PROJECT_NAME} ${SOURCES})
 #)
 
 target_include_directories(${PROJECT_NAME} PRIVATE
-        ${CMAKE_SOURCE_DIR}/Miriya/vendor/spdlog/include
+        # ${CMAKE_SOURCE_DIR}/Miriya/vendor/spdlog/include
         ${CMAKE_SOURCE_DIR}/Miriya/src
         ${CMAKE_SOURCE_DIR}/Miriya/include
-        ${CMAKE_SOURCE_DIR}/Miriya/vendor
-        ${CMAKE_SOURCE_DIR}/Miriya/vendor/imgui
+        # ${CMAKE_SOURCE_DIR}/Miriya/vendor
+        # ${CMAKE_SOURCE_DIR}/Miriya/vendor/imgui
 #        ${IncludeDir_ImGui}
-        ${CMAKE_SOURCE_DIR}/Miriya/vendor/Glad
+        # ${CMAKE_SOURCE_DIR}/Miriya/vendor/Glad
 #        ${IncludeDir_glm}
-        ${CMAKE_SOURCE_DIR}/Miriya/vendor/glm
-        ${CMAKE_SOURCE_DIR}/Miriya/vendor/entt
+        # ${CMAKE_SOURCE_DIR}/Miriya/vendor/glm
+        # ${CMAKE_SOURCE_DIR}/Miriya/vendor/entt
 )
 
-add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
-        COMMAND ${CMAKE_COMMAND} -E copy_if_different
-        "${CMAKE_SOURCE_DIR}/Miriya/vendor/GLFW/lib/glfw3.dll"
-        $<TARGET_FILE_DIR:${PROJECT_NAME}>)
+# add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
+#         COMMAND ${CMAKE_COMMAND} -E copy_if_different
+#         "${CMAKE_SOURCE_DIR}/Miriya/vendor/GLFW/lib/glfw3.dll"
+#         $<TARGET_FILE_DIR:${PROJECT_NAME}>)
 
 target_link_libraries(${PROJECT_NAME} PRIVATE
     Miriya

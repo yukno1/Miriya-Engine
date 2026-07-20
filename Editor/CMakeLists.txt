@@ -12,7 +12,6 @@ file(GLOB_RECURSE RUSLAN_SOURCES
 
 file(GLOB_RECURSE RUSLAN_HEADERS
     src/*.h
-    ${CMAKE_SOURCE_DIR}/Miriya/vendor/entt/*.hpp
 )
 
 add_executable(${PROJECT_NAME} ${RUSLAN_SOURCES} ${RUSLAN_HEADERS})
@@ -21,13 +20,8 @@ add_compile_options("$<$<C_COMPILER_ID:MSVC>:/utf-8>")
 add_compile_options("$<$<CXX_COMPILER_ID:MSVC>:/utf-8>")
 
 target_include_directories(${PROJECT_NAME} PRIVATE
-    ${CMAKE_SOURCE_DIR}/Miriya/include
-    ${CMAKE_SOURCE_DIR}/Miriya/vendor/spdlog/include
-    ${CMAKE_SOURCE_DIR}/Miriya/vendor
-    ${CMAKE_SOURCE_DIR}/Miriya/vendor/entt
-    ${IncludeDir_filewatch}
-    ${CMAKE_SOURCE_DIR}/Miriya/vendor/glm
-    ${IncludeDir_ImGuizmo}
+    # ${IncludeDir_filewatch}
+    # ${IncludeDir_ImGuizmo}
 )
 
 target_link_libraries(${PROJECT_NAME} PRIVATE
