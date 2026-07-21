@@ -3,21 +3,22 @@
 // For use by Miriya applications
 #include "Miriya/Core/Base.h"
 
-#include "../src/Miriya/Core/Application.h"
+#include "Miriya/Core/Application.h"
 #include "Miriya/Core/Layer.h"
 #include "Miriya/Core/Log.h"
 
 #include "Miriya/Core/Timestep.h"
 
-#include "../src/Miriya/Core/Input.h"
+#include "Miriya/Core/Input.h"
 #include "Miriya/Core/Keycodes.h"
-#include "../src/Miriya/Core/MouseButtonCodes.h"
+#include "Miriya/Core/MouseCodes.h"
 #include "Miriya/Renderer/OrthographicCameraController.h"
 
 #include "Miriya/ImGui/ImGuiLayer.h"
 
 #include "Miriya/Scene/Scene.h"
 #include "Miriya/Scene/Entity.h"
+#include "Miriya/Scene/ScriptableEntity.h"
 #include "Miriya/Scene/Components.h"
 
 // --------Renderer Related--------------------

@@ -1,3 +1,4 @@
+#include "Miriya/Core/MouseCodes.h"
 #include "mirpch.h"
 #include "Miriya/Core/Input.h"
 
@@ -8,17 +9,17 @@ namespace Miriya {
 
 // Scope<Input> Input::s_Instance = CreateScope<WindowsInput>();
 
-bool Input::IsKeyPressed(int keycode)
+bool Input::IsKeyPressed(KeyCode key)
 {
     auto window = static_cast<GLFWwindow*>(Application::Get().GetWindow().GetNativeWindow());
-    auto state  = glfwGetKey(window, keycode);
+    auto state  = glfwGetKey(window, static_cast<int32_t>(key));
     return state == GLFW_PRESS || state == GLFW_REPEAT;
 }
 
-bool Input::IsMouseButtonPressed(int button)
+bool Input::IsMouseButtonPressed(MouseCode button)
 {
     auto window = static_cast<GLFWwindow*>(Application::Get().GetWindow().GetNativeWindow());
-    auto state  = glfwGetMouseButton(window, button);
+    auto state  = glfwGetMouseButton(window, static_cast<int32_t>(button));
     return state == GLFW_PRESS;
 }
 
