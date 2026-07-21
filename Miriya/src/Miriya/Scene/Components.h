@@ -59,15 +59,18 @@ struct NativeScriptComponent
 
     // std::function<void()> InstantiateFunction;
     // std::function<void()> DestroyInstanceFunction;
-    void (*InstantiateFunction)(ScriptableEntity*&)     = nullptr;
-    void (*DestroyInstanceFunction)(ScriptableEntity*&) = nullptr;
+    // void (*InstantiateFunction)(ScriptableEntity*&)     = nullptr;
+    // void (*DestroyInstanceFunction)(ScriptableEntity*&) = nullptr;
 
     // std::function<void(ScriptableEntity*)>           OnCreateFunction;
     // std::function<void(ScriptableEntity*)>           OnDestroyFunction;
     // std::function<void(ScriptableEntity*, Timestep)> OnUpdateFunction;
-    void (*OnCreateFunction)(ScriptableEntity*)           = nullptr;
-    void (*OnDestroyFunction)(ScriptableEntity*)          = nullptr;
-    void (*OnUpdateFunction)(ScriptableEntity*, Timestep) = nullptr;
+    // void (*OnCreateFunction)(ScriptableEntity*)           = nullptr;
+    // void (*OnDestroyFunction)(ScriptableEntity*)          = nullptr;
+    // void (*OnUpdateFunction)(ScriptableEntity*, Timestep) = nullptr;
+
+    ScriptableEntity* (*InstantiateScript)();
+    void (*DestroyScript)(NativeScriptComponent*);
 
     template<typename T> void Bind()
     {
@@ -76,10 +79,15 @@ struct NativeScriptComponent
         //     delete (T*)Instance;
         //     Instance = nullptr;
         // };
-        InstantiateFunction     = [](ScriptableEntity*& instance) { instance = new T(); };
-        DestroyInstanceFunction = [](ScriptableEntity*& instance) {
-            delete static_cast<T*>(instance);
-            instance = nullptr;
+        // InstantiateFunction     = [](ScriptableEntity*& instance) { instance = new T(); };
+        // DestroyInstanceFunction = [](ScriptableEntity*& instance) {
+        //     delete static_cast<T*>(instance);
+        //     instance = nullptr;
+        // };
+        InstantiateScript = []() { return static_cast<ScriptableEntity*>(new T()); };
+        DestroyScript     = [](NativeScriptComponent* nsc) {
+            delete nsc->Instance;
+            nsc->Instance = nullptr;
         };
 
         // OnCreateFunction  = [](ScriptableEntity* instance) { ((T*)instance)->OnCreate(); };
@@ -87,15 +95,15 @@ struct NativeScriptComponent
         // OnUpdateFunction  = [](ScriptableEntity* instance, Timestep ts) {
         //     ((T*)instance)->OnUpdate(ts);
         // };
-        OnCreateFunction = [](ScriptableEntity* instance) {
-            static_cast<T*>(instance)->OnCreate();
-        };
-        OnDestroyFunction = [](ScriptableEntity* instance) {
-            static_cast<T*>(instance)->OnDestroy();
-        };
-        OnUpdateFunction = [](ScriptableEntity* instance, Timestep ts) {
-            static_cast<T*>(instance)->OnUpdate(ts);
-        };
+        // OnCreateFunction = [](ScriptableEntity* instance) {
+        //     static_cast<T*>(instance)->OnCreate();
+        // };
+        // OnDestroyFunction = [](ScriptableEntity* instance) {
+        //     static_cast<T*>(instance)->OnDestroy();
+        // };
+        // OnUpdateFunction = [](ScriptableEntity* instance, Timestep ts) {
+        //     static_cast<T*>(instance)->OnUpdate(ts);
+        // };
     }
 };
 
