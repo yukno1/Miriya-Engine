@@ -66,6 +66,8 @@ void EditorLayer::OnAttach()
     m_CameraEntity.AddComponent<NativeScriptComponent>().Bind<CameraController>();
 
     m_SecondCamera.AddComponent<NativeScriptComponent>().Bind<CameraController>();
+
+    m_SceneHierarchyPanel.SetContext(m_ActiveScene);
 }
 
 void EditorLayer::OnDetach()
@@ -166,6 +168,8 @@ void EditorLayer::OnImGuiRender()
 
         ImGui::EndMenuBar();
     }
+
+    m_SceneHierarchyPanel.OnImGuiRender();
 
     ImGui::Begin("Settings");
 
