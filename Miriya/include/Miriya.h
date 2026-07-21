@@ -10,8 +10,8 @@
 #include "Miriya/Core/Timestep.h"
 
 #include "Miriya/Core/Input.h"
-#include "Miriya/Core/Keycodes.h"
-#include "Miriya/Core/MouseCodes.h"
+#include "Miriya/Core/Keycode.h"
+#include "Miriya/Core/MouseCode.h"
 #include "Miriya/Renderer/OrthographicCameraController.h"
 
 #include "Miriya/ImGui/ImGuiLayer.h"

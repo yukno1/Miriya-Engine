@@ -1,6 +1,6 @@
 #pragma once
 
-#include "mirpch.h"
+#include <sstream>
 
 #include "Miriya/Core/Base.h"
 #include "Miriya/Events/Event.h"

@@ -56,10 +56,10 @@ void EditorLayer::OnAttach()
 
             float speed = 5.0f;
 
-            if (Input::IsKeyPressed(KeyCode::A)) transform[3][0] -= speed * ts;
-            if (Input::IsKeyPressed(KeyCode::D)) transform[3][0] += speed * ts;
-            if (Input::IsKeyPressed(KeyCode::W)) transform[3][1] += speed * ts;
-            if (Input::IsKeyPressed(KeyCode::S)) transform[3][1] -= speed * ts;
+            if (Input::IsKeyPressed(Key::A)) transform[3][0] -= speed * ts;
+            if (Input::IsKeyPressed(Key::D)) transform[3][0] += speed * ts;
+            if (Input::IsKeyPressed(Key::W)) transform[3][1] += speed * ts;
+            if (Input::IsKeyPressed(Key::S)) transform[3][1] -= speed * ts;
         }
     };
 
@@ -215,7 +215,7 @@ void EditorLayer::OnImGuiRender()
     ImVec2 viewportPanelSize = ImGui::GetContentRegionAvail();
     m_ViewportSize           = {viewportPanelSize.x, viewportPanelSize.y};
 
-    uint32_t textureID =
+    uint64_t textureID =
         m_Framebuffer
             ->GetColorAttachmentRendererID();   // 如果你的引擎以后把 GetColorAttachmentRendererID()
                                                 // 的返回类型改成与 ImTextureID 等宽（如

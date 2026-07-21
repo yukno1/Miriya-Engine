@@ -1,18 +1,19 @@
 #pragma once
 
-#include "Miriya/Core/Base.h"
-#include "Miriya/Core/Keycodes.h"
-#include "Miriya/Core/MouseCodes.h"
+#include <glm/glm.hpp>
+
+#include "Miriya/Core/Keycode.h"
+#include "Miriya/Core/MouseCode.h"
 
 namespace Miriya {
 class Input
 {
 public:
-    static bool                    IsKeyPressed(KeyCode key);
-    static bool                    IsMouseButtonPressed(MouseCode button);
-    static std::pair<float, float> GetMousePosition();
-    static float                   GetMouseX();
-    static float                   GetMouseY();
+    static bool      IsKeyPressed(KeyCode key);
+    static bool      IsMouseButtonPressed(MouseCode button);
+    static glm::vec2 GetMousePosition();
+    static float     GetMouseX();
+    static float     GetMouseY();
 };
 
 }   // namespace Miriya

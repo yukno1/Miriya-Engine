@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Miriya/Events/Event.h"
-// #include "Miriya/Core/MouseCodes.h"
+#include "Miriya/Core/MouseCode.h"
 
 namespace Miriya {
 
@@ -58,21 +58,21 @@ private:
 class MouseButtonEvent : public Event
 {
 public:
-    inline int GetMouseButton() const { return m_Button; }
+    MouseCode GetMouseButton() const { return m_Button; }
 
     EVENT_CLASS_CATEGORY(EventCategoryMouse | EventCategoryInput | EventCategoryMouseButton)
 protected:
-    MouseButtonEvent(const int button)
+    MouseButtonEvent(const MouseCode button)
         : m_Button(button)
     {}
 
-    int m_Button;
+    MouseCode m_Button;
 };
 
 class MouseButtonPressedEvent : public MouseButtonEvent
 {
 public:
-    explicit MouseButtonPressedEvent(const int button)
+    explicit MouseButtonPressedEvent(const MouseCode button)
         : MouseButtonEvent(button)
     {}
 
@@ -89,7 +89,7 @@ public:
 class MouseButtonReleasedEvent : public MouseButtonEvent
 {
 public:
-    explicit MouseButtonReleasedEvent(const int button)
+    explicit MouseButtonReleasedEvent(const MouseCode button)
         : MouseButtonEvent(button)
     {}
 

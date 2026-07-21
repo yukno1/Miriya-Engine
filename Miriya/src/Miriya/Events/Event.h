@@ -1,9 +1,12 @@
 #pragma once
 
+#include <functional>
+
+#include "Miriya/Debug/Instrumentor.h"
 #include "Miriya/Core/Base.h"
 
 namespace Miriya {
-// Events in Hazel are currently blocking, meaning when an event occurs it
+// Events in Miriya are currently blocking, meaning when an event occurs it
 // immediately gets dispatched and must be dealt with right then an there.
 // For the future, a better strategy might be to buffer events in an event
 // bus and process them during the "event" part of the update stage.
@@ -68,12 +71,9 @@ public:
 
     bool Handled = false;
 
-    virtual EventType GetEventType() const = 0;
-
-    virtual const char* GetName() const = 0;
-
-    virtual int GetCategoryFlags() const = 0;
-
+    virtual EventType   GetEventType() const     = 0;
+    virtual const char* GetName() const          = 0;
+    virtual int         GetCategoryFlags() const = 0;
     virtual std::string ToString() const { return GetName(); }
 
     inline bool IsInCategory(EventCategory category) const { return GetCategoryFlags() & category; }
@@ -105,4 +105,5 @@ inline std::ostream& operator<<(std::ostream& os, const Event& e)
 {
     return os << e.ToString();
 }
+
 }   // namespace Miriya
