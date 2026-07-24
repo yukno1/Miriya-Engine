@@ -30,7 +30,7 @@ add_subdirectory(Miriya/vendor/GLAD)
 add_subdirectory(Miriya/vendor/imgui)
 add_subdirectory(Miriya/vendor/entt-3.16)
 add_subdirectory(Miriya/vendor/spdlog-1.15.3)
-#add_subdirectory(Miriya/vendor/yaml-cpp)
+add_subdirectory(Miriya/vendor/yaml-cpp-0.9.0)
 
 # core
 add_subdirectory(Miriya)
