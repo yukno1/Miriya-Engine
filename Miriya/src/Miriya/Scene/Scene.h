@@ -1,8 +1,9 @@
 #pragma once
 
-#include <entt/entt.hpp>
-
 #include "Miriya/Core/Timestep.h"
+#include "Miriya/Renderer/EditorCamera.h"
+
+#include <entt/entt.hpp>
 
 namespace Miriya {
 
@@ -17,7 +18,8 @@ public:
     Entity CreateEntity(const std::string& name = std::string());
     void   DestroyEntity(Entity entity);
 
-    void OnUpdate(Timestep ts);
+    void OnUpdateRuntime(Timestep ts);
+    void OnUpdateEditor(Timestep ts, EditorCamera& camera);
     void OnViewportResize(uint32_t width, uint32_t height);
 
     Entity GetPrimaryCameraEntity();

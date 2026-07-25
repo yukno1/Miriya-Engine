@@ -134,6 +134,18 @@ void Renderer2D::BeginScene(const Camera& camera, const glm::mat4& transform)
     s_Data.TextureSlotIndex = 1;
 }
 
+void Renderer2D::BeginScene(const EditorCamera& camera)
+{
+    MIR_PROFILE_FUNCTION();
+
+    glm::mat4 viewProj = camera.GetViewProjection();
+
+    s_Data.TextureShader->Bind();
+    s_Data.TextureShader->SetMat4("u_ViewProjection", viewProj);
+
+    StartBatch();
+}
+
 void Renderer2D::EndScene()
 {
     MIR_PROFILE_FUNCTION();
@@ -143,6 +155,14 @@ void Renderer2D::EndScene()
     s_Data.QuadVertexBuffer->SetData(s_Data.QuadVertexBufferBase, dataSize);
 
     Flush();
+}
+
+void Renderer2D::StartBatch()
+{
+    s_Data.QuadIndexCount      = 0;
+    s_Data.QuadVertexBufferPtr = s_Data.QuadVertexBufferBase;
+
+    s_Data.TextureSlotIndex = 1;
 }
 
 void Renderer2D::Flush()
@@ -164,6 +184,12 @@ void Renderer2D::FlushAndReset()
     s_Data.QuadVertexBufferPtr = s_Data.QuadVertexBufferBase;
 
     s_Data.TextureSlotIndex = 1;
+}
+
+void Renderer2D::NextBatch()
+{
+    Flush();
+    StartBatch();
 }
 
 void Renderer2D::DrawQuad(const glm::vec2& position, const glm::vec2& size, const glm::vec4& color)

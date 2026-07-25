@@ -3,6 +3,7 @@
 #include "Miriya/Renderer/OrthographicCamera.h"
 #include "Miriya/Renderer/Texture.h"
 #include "Miriya/Renderer/Camera.h"
+#include "Miriya/Renderer/EditorCamera.h"
 
 namespace Miriya {
 
@@ -13,6 +14,7 @@ public:
     static void Shutdown();
 
     static void BeginScene(const Camera& camera, const glm::mat4& transform);
+    static void BeginScene(const EditorCamera& camera);
     static void BeginScene(const OrthographicCamera& camera);   // TODO: Remove
     static void EndScene();
     static void Flush();
@@ -56,6 +58,8 @@ public:
     static Statistics GetStats();
 
 private:
+    static void StartBatch();
+    static void NextBatch();
     static void FlushAndReset();
 };
 }   // namespace Miriya

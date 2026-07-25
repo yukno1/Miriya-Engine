@@ -3,6 +3,8 @@
 #include "Miriya.h"
 #include "Panel/SceneHierarchyPanel.h"
 
+#include "Miriya/Renderer/EditorCamera.h"
+
 namespace Miriya {
 
 class EditorLayer : public Layer
@@ -39,6 +41,8 @@ private:
     Entity     m_SecondCamera;
 
     bool m_PrimaryCamera = true;
+
+    EditorCamera m_EditorCamera;
 
     Ref<Texture2D> m_CheckerboardTexture;
 
