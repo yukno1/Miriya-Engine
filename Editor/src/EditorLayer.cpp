@@ -26,7 +26,9 @@ void EditorLayer::OnAttach()
     m_CheckerboardTexture = Texture2D::Create("assets/textures/Checkerboard.png");
 
     FramebufferSpecification fbSpec;
-    fbSpec.Attachments = {FramebufferTextureFormat::RGBA8, FramebufferTextureFormat::Depth};
+    fbSpec.Attachments = {FramebufferTextureFormat::RGBA8,
+                          FramebufferTextureFormat::RED_INTEGER,
+                          FramebufferTextureFormat::Depth};
     fbSpec.Width       = 1280;
     fbSpec.Height      = 720;
     m_Framebuffer      = Framebuffer::Create(fbSpec);
@@ -128,6 +130,20 @@ void EditorLayer::OnUpdate(Timestep ts)
     // Update scene
     m_ActiveScene->OnUpdateEditor(ts, m_EditorCamera);
 
+    auto [mx, my] = ImGui::GetMousePos();
+    mx -= m_ViewportBounds[0].x;
+    my -= m_ViewportBounds[0].y;
+    glm::vec2 viewportSize = m_ViewportBounds[1] - m_ViewportBounds[0];
+    my                     = viewportSize.y - my;
+    int mouseX             = (int)mx;
+    int mouseY             = (int)my;
+
+    if (mouseX >= 0 && mouseY >= 0 && mouseX < (int)viewportSize.x &&
+        mouseY < (int)viewportSize.y) {
+        int pixelData = m_Framebuffer->ReadPixel(1, mouseX, mouseY);
+        MIR_CORE_WARN("Pixel data = {0}", pixelData);
+    }
+
     m_Framebuffer->Unbind();
 }
 
@@ -226,6 +242,13 @@ void EditorLayer::OnImGuiRender()
 
     ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2{0, 0});
     ImGui::Begin("Viewport");
+    auto viewportMinRegion = ImGui::GetWindowContentRegionMin();
+    auto viewportMaxRegion = ImGui::GetWindowContentRegionMax();
+    auto viewportOffset    = ImGui::GetWindowPos();
+    m_ViewportBounds[0]    = {viewportMinRegion.x + viewportOffset.x,
+                              viewportMinRegion.y + viewportOffset.y};
+    m_ViewportBounds[1]    = {viewportMaxRegion.x + viewportOffset.x,
+                              viewportMaxRegion.y + viewportOffset.y};
 
     m_ViewportFocused = ImGui::IsWindowFocused();
     m_ViewportHovered = ImGui::IsWindowHovered();
@@ -254,10 +277,10 @@ void EditorLayer::OnImGuiRender()
         ImGuizmo::SetOrthographic(false);
         ImGuizmo::SetDrawlist();
 
-        float windowWidth  = (float)ImGui::GetWindowWidth();
-        float windowHeight = (float)ImGui::GetWindowHeight();
-        ImGuizmo::SetRect(
-            ImGui::GetWindowPos().x, ImGui::GetWindowPos().y, windowWidth, windowHeight);
+        ImGuizmo::SetRect(m_ViewportBounds[0].x,
+                          m_ViewportBounds[0].y,
+                          m_ViewportBounds[1].x - m_ViewportBounds[0].x,
+                          m_ViewportBounds[1].y - m_ViewportBounds[0].y);
 
         // Camera
 
