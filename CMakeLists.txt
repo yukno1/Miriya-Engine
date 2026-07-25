@@ -32,6 +32,10 @@ add_subdirectory(Miriya/vendor/entt-3.16)
 add_subdirectory(Miriya/vendor/spdlog-1.15.3)
 add_subdirectory(Miriya/vendor/yaml-cpp-0.9.0)
 
+add_subdirectory(Miriya/vendor/ImGuizmo-1.10)
+set_target_properties(imguizmo PROPERTIES SKIP_PRECOMPILE_HEADERS ON)
+target_link_libraries(imguizmo PUBLIC imgui)
+
 # core
 add_subdirectory(Miriya)
 # editor

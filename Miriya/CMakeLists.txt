@@ -69,7 +69,8 @@ target_link_libraries(${PROJECT_NAME} PUBLIC
         spdlog
         imgui
         EnTT::EnTT
-       yaml-cpp::yaml-cpp
+        yaml-cpp::yaml-cpp
+        imguizmo
         # ${Library_mono}
 )
 

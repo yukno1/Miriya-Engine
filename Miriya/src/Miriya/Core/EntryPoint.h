@@ -3,6 +3,7 @@
 #include "Miriya/Core/Application.h"
 
 #ifdef MIR_PLATFORM_WINDOWS
+// #    include <objbase.h>   // CoInitializeEx / CoUninitialize
 
 // function returns the application
 // creation is implemented in client
@@ -12,19 +13,23 @@
 int main(int argc, char** argv)
 {
 
+    // UI 线程必须是 STA，否则 shell 文件对话框及 Explorer 扩展会报
+    // RPC_E_CANTCALLOUT_ININPUTSYNCCALL。
+    // CoInitializeEx(nullptr, COINIT_APARTMENTTHREADED);
+
     // For test, Later move into App
     Miriya::Log::Init();
     MIR_CORE_WARN("Initialized Log");
 
-    MIR_PROFILE_BEGIN_SESSION("Startup", "../../Sandbox/Miriya-Profile-Startup.json");
+    MIR_PROFILE_BEGIN_SESSION("Startup", "../Sandbox/Miriya-Profile-Startup.json");
     auto app = Miriya::CreateApplication();
     MIR_PROFILE_END_SESSION();
 
-    MIR_PROFILE_BEGIN_SESSION("Runtime", "../../Sandbox/Miriya-Profile-Runtime.json");
+    MIR_PROFILE_BEGIN_SESSION("Runtime", "../Sandbox/Miriya-Profile-Runtime.json");
     app->Run();
     MIR_PROFILE_END_SESSION();
 
-    MIR_PROFILE_BEGIN_SESSION("Shutdown", "../../Sandbox/Miriya-Profile-Shutdown.json");
+    MIR_PROFILE_BEGIN_SESSION("Shutdown", "../Sandbox/Miriya-Profile-Shutdown.json");
     delete app;
     MIR_PROFILE_END_SESSION();
 }
