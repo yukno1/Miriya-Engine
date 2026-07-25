@@ -77,6 +77,17 @@ static bool IsDepthFormat(FramebufferTextureFormat format)
     return false;
 }
 
+static GLenum MiriyaFBTextureFormatToGL(FramebufferTextureFormat format)
+{
+    switch (format) {
+    case FramebufferTextureFormat::RGBA8: return GL_RGBA8;
+    case FramebufferTextureFormat::RED_INTEGER: return GL_RED_INTEGER;
+    }
+
+    MIR_CORE_ASSERT(false, "Unsupported framebuffer texture format");
+    return 0;
+}
+
 }   // namespace Utils
 
 OpenGLFramebuffer::OpenGLFramebuffer(const FramebufferSpecification& spec)
@@ -210,6 +221,19 @@ int OpenGLFramebuffer::ReadPixel(uint32_t attachmentIndex, int x, int y)
     int pixelData;
     glReadPixels(x, y, 1, 1, GL_RED_INTEGER, GL_INT, &pixelData);
     return pixelData;
+}
+
+void OpenGLFramebuffer::ClearAttachment(uint32_t attachmentIndex, int value)
+{
+    MIR_CORE_ASSERT(attachmentIndex < m_ColorAttachments.size(),
+                    "Color attachment index out of range");
+
+    auto& spec = m_ColorAttachmentSpecifications[attachmentIndex];
+    glClearTexImage(m_ColorAttachments[attachmentIndex],
+                    0,
+                    Utils::MiriyaFBTextureFormatToGL(spec.TextureFormat),
+                    GL_INT,
+                    &value);
 }
 
 }   // namespace Miriya
