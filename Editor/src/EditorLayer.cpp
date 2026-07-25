@@ -349,6 +349,8 @@ void EditorLayer::OnEvent(Event& e)
 
     EventDispatcher dispatcher(e);
     dispatcher.Dispatch<KeyPressedEvent>(MIR_BIND_EVENT_FN(EditorLayer::OnKeyPressed));
+    dispatcher.Dispatch<MouseButtonPressedEvent>(
+        MIR_BIND_EVENT_FN(EditorLayer::OnMouseButtonPressed));
 }
 
 bool EditorLayer::OnKeyPressed(KeyPressedEvent& e)
@@ -387,6 +389,15 @@ bool EditorLayer::OnKeyPressed(KeyPressedEvent& e)
     case Key::E: m_GizmoType = ImGuizmo::OPERATION::ROTATE; break;
     case Key::R: m_GizmoType = ImGuizmo::OPERATION::SCALE; break;
     }
+}
+
+bool EditorLayer::OnMouseButtonPressed(MouseButtonPressedEvent& e)
+{
+    if (e.GetMouseButton() == Mouse::ButtonLeft) {
+        if (m_ViewportHovered && !ImGuizmo::IsOver() && !Input::IsKeyPressed(Key::LeftAlt))
+            m_SceneHierarchyPanel.SetSelectedEntity(m_HoveredEntity);
+    }
+    return false;
 }
 
 void EditorLayer::NewScene()
