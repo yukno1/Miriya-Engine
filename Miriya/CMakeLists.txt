@@ -99,8 +99,8 @@ add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
         "${CMAKE_RUNTIME_OUTPUT_DIRECTORY}")
 
 target_link_libraries(${PROJECT_NAME} 
-PUBLIC
-#        box2d
+    PUBLIC
+        box2d
         glad
         glfw
         glm::glm
@@ -111,7 +111,7 @@ PUBLIC
         imguizmo
         # ${Library_mono}
 
-        PRIVATE
+    PRIVATE
         Vulkan::cppm
         # shaderc
         $<IF:$<CONFIG:Debug>,${SHADERC_LIB_DEBUG},${SHADERC_LIB_RELEASE}>

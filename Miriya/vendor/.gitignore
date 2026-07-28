@@ -15,3 +15,14 @@ SPIRV-Cross/Package.swift
 SPIRV-Cross/*.sh
 SPIRV-Cross/test_shaders.py
 
+# box2d-3.1.1: 仅保留库源码(src/include)与构建必需文件，忽略示例/测试/文档/构建脚本
+box2d-3.1.1/benchmark/
+box2d-3.1.1/docs/
+box2d-3.1.1/extern/
+box2d-3.1.1/samples/
+box2d-3.1.1/shared/
+box2d-3.1.1/test/
+box2d-3.1.1/build.sh
+box2d-3.1.1/build_emscripten.sh
+box2d-3.1.1/create_sln.bat
+box2d-3.1.1/deploy_docs.sh
