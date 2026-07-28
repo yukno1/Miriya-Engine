@@ -18,12 +18,15 @@ template<> struct convert<glm::vec3>
         node.push_back(rhs.x);
         node.push_back(rhs.y);
         node.push_back(rhs.z);
+        node.SetStyle(EmitterStyle::Flow);
         return node;
     }
 
     static bool decode(const Node& node, glm::vec3& rhs)
     {
-        if (!node.IsSequence() || node.size() != 3) return false;
+        if (!node.IsSequence() || node.size() != 3) {
+            return false;
+        }
 
         rhs.x = node[0].as<float>();
         rhs.y = node[1].as<float>();
@@ -41,12 +44,15 @@ template<> struct convert<glm::vec4>
         node.push_back(rhs.y);
         node.push_back(rhs.z);
         node.push_back(rhs.w);
+        node.SetStyle(EmitterStyle::Flow);
         return node;
     }
 
     static bool decode(const Node& node, glm::vec4& rhs)
     {
-        if (!node.IsSequence() || node.size() != 4) return false;
+        if (!node.IsSequence() || node.size() != 4) {
+            return false;
+        }
 
         rhs.x = node[0].as<float>();
         rhs.y = node[1].as<float>();
@@ -148,12 +154,7 @@ void SceneSerializer::Serialize(const std::string& filepath)
     out << YAML::BeginMap;
     out << YAML::Key << "Scene" << YAML::Value << "Untitled";
     out << YAML::Key << "Entities" << YAML::Value << YAML::BeginSeq;
-    // m_Scene->m_Registry.view<entt::entity>().each([&](auto entityID) {
-    //     Entity entity = {entityID, m_Scene.get()};
-    //     if (!entity) return;
 
-    //     SerializeEntity(out, entity);
-    // });
     for (auto entityID : m_Scene->m_Registry.view<entt::entity>()) {
         Entity entity = {entityID, m_Scene.get()};
         if (!entity) continue;
@@ -175,12 +176,17 @@ void SceneSerializer::SerializeRuntime(const std::string& filepath)
 
 bool SceneSerializer::Deserialize(const std::string& filepath)
 {
-    std::ifstream     stream(filepath);
-    std::stringstream strStream;
-    strStream << stream.rdbuf();
+    YAML::Node data;
+    try {
+        data = YAML::LoadFile(filepath);
+    }
+    catch (YAML::ParserException e) {
+        return false;
+    }
 
-    YAML::Node data = YAML::Load(strStream.str());
-    if (!data["Scene"]) return false;
+    if (!data["Scene"]) {
+        return false;
+    }
 
     std::string sceneName = data["Scene"].as<std::string>();
     MIR_CORE_TRACE("Deserializing scene '{0}'", sceneName);
