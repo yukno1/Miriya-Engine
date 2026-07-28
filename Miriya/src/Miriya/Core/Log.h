@@ -1,9 +1,16 @@
 ﻿#pragma once
 
+#define GLM_ENABLE_EXPERIMENTAL
+#include "glm/gtx/string_cast.hpp"
+
 #include "Miriya/Core/Base.h"
 
+// This ignores all warnings raised inside External headers
+#pragma warning(push, 0)
 #include "spdlog/spdlog.h"
 #include "spdlog/fmt/ostr.h"
+#pragma warning(pop)
+
 
 namespace Miriya {
 class Log
@@ -19,6 +26,24 @@ private:
     static Ref<spdlog::logger> s_ClientLogger;
 };
 }   // namespace Miriya
+
+template<typename OStream, glm::length_t L, typename T, glm::qualifier Q>
+inline OStream& operator<<(OStream& os, const glm::vec<L, T, Q>& vector)
+{
+    return os << glm::to_string(vector);
+}
+
+template<typename OStream, glm::length_t C, glm::length_t R, typename T, glm::qualifier Q>
+inline OStream& operator<<(OStream& os, const glm::mat<C, R, T, Q>& matrix)
+{
+    return os << glm::to_string(matrix);
+}
+
+template<typename OStream, typename T, glm::qualifier Q>
+inline OStream& operator<<(OStream& os, glm::qua<T, Q> quaternio)
+{
+    return os << glm::to_string(quaternio);
+}
 
 // Core log macros
 #define MIR_CORE_ERROR(...) ::Miriya::Log::GetCoreLogger()->error(__VA_ARGS__)
