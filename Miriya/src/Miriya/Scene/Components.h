@@ -8,6 +8,7 @@
 
 #include "SceneCamera.h"
 #include "ScriptableEntity.h"
+#include "Miriya/Renderer/Texture.h"
 
 namespace Miriya {
 
@@ -45,7 +46,9 @@ struct TransformComponent
 
 struct SpriteRendererComponent
 {
-    glm::vec4 Color{1.0f, 1.0f, 1.0f, 1.0f};
+    glm::vec4      Color{1.0f, 1.0f, 1.0f, 1.0f};
+    Ref<Texture2D> Texture;
+    float          TilingFactor = 1.0f;
 
     SpriteRendererComponent()                               = default;
     SpriteRendererComponent(const SpriteRendererComponent&) = default;
