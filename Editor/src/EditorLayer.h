@@ -2,6 +2,7 @@
 
 #include "Miriya.h"
 #include "Panel/SceneHierarchyPanel.h"
+#include "Panel/ContentBrowserPanel.h"
 
 #include "Miriya/Renderer/EditorCamera.h"
 
@@ -59,6 +60,7 @@ private:
 
     // Panels
     SceneHierarchyPanel m_SceneHierarchyPanel;
+    ContentBrowserPanel m_ContentBrowserPanel;
 };
 
 }   // namespace Miriya
