@@ -26,6 +26,8 @@ void EditorLayer::OnAttach()
     MIR_PROFILE_FUNCTION();
 
     m_CheckerboardTexture = Texture2D::Create("assets/textures/Checkerboard.png");
+    m_IconPlay            = Texture2D::Create("Resources/Icons/PlayButton.png");
+    m_IconStop            = Texture2D::Create("Resources/Icons/StopButton.png");
 
     FramebufferSpecification fbSpec;
     fbSpec.Attachments = {FramebufferTextureFormat::RGBA8,
@@ -122,13 +124,6 @@ void EditorLayer::OnUpdate(Timestep ts)
         m_ActiveScene->OnViewportResize((uint32_t)m_ViewportSize.x, (uint32_t)m_ViewportSize.y);
     }
 
-    // Update
-    if (m_ViewportFocused) {
-        m_CameraController.OnUpdate(ts);
-    }
-
-    m_EditorCamera.OnUpdate(ts);
-
     // Render
     Renderer2D::ResetStats();
 
@@ -140,7 +135,22 @@ void EditorLayer::OnUpdate(Timestep ts)
     m_Framebuffer->ClearAttachment(1, -1);
 
     // Update scene
-    m_ActiveScene->OnUpdateEditor(ts, m_EditorCamera);
+    switch (m_SceneState) {
+    case SceneState::Edit:
+    {
+        if (m_ViewportFocused) m_CameraController.OnUpdate(ts);
+
+        m_EditorCamera.OnUpdate(ts);
+
+        m_ActiveScene->OnUpdateEditor(ts, m_EditorCamera);
+        break;
+    }
+    case SceneState::Play:
+    {
+        m_ActiveScene->OnUpdateRuntime(ts);
+        break;
+    }
+    }
 
     auto [mx, my] = ImGui::GetMousePos();
     mx -= m_ViewportBounds[0].x;
@@ -243,6 +253,8 @@ void EditorLayer::OnImGuiRender()
     m_SceneHierarchyPanel.OnImGuiRender();
     m_ContentBrowserPanel.OnImGuiRender();
 
+
+    // -----------Stats-----------------------------------------------
     ImGui::Begin("Stats");
 
     std::string name = "None";
@@ -259,7 +271,9 @@ void EditorLayer::OnImGuiRender()
     ImGui::Text("Indices: %d", stats.GetTotalIndexCount());
 
     ImGui::End();
+    // ----------------Stats----------------------------------------
 
+    // ----------------Viewport-------------------------------------
     ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2{0, 0});
     ImGui::Begin("Viewport");
     auto viewportMinRegion = ImGui::GetWindowContentRegionMin();
@@ -356,7 +370,51 @@ void EditorLayer::OnImGuiRender()
 
     ImGui::End();
     ImGui::PopStyleVar();
+    // -----------------------Viewport---------------------------------
 
+    UI_Toolbar();
+
+    ImGui::End();
+}
+
+void EditorLayer::UI_Toolbar()
+{
+    ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0, 2));
+    ImGui::PushStyleVar(ImGuiStyleVar_ItemInnerSpacing, ImVec2(0, 0));
+    ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0, 0, 0, 0));
+    auto&       colors        = ImGui::GetStyle().Colors;
+    const auto& buttonHovered = colors[ImGuiCol_ButtonHovered];
+    ImGui::PushStyleColor(ImGuiCol_ButtonHovered,
+                          ImVec4(buttonHovered.x, buttonHovered.y, buttonHovered.z, 0.5f));
+    const auto& buttonActive = colors[ImGuiCol_ButtonActive];
+    ImGui::PushStyleColor(ImGuiCol_ButtonActive,
+                          ImVec4(buttonActive.x, buttonActive.y, buttonActive.z, 0.5f));
+
+    ImGui::Begin("##toolbar",
+                 nullptr,
+                 ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoScrollbar |
+                     ImGuiWindowFlags_NoScrollWithMouse);
+
+    float          size = ImGui::GetWindowHeight() - 4.0f;
+    Ref<Texture2D> icon = m_SceneState == SceneState::Edit ? m_IconPlay : m_IconStop;
+    ImGui::SetCursorPosX((ImGui::GetWindowContentRegionMax().x * 0.5f) - (size * 0.5f));
+    // 旧版 frame_padding = 0 表示按钮图片周围不加内边距。新版去掉该参数后会使用默认的
+    // ImGuiStyleVar_FramePadding。
+    ImGui::PushStyleVar(ImGuiStyleVar_FramePadding, ImVec2(0, 0));
+    if (ImGui::ImageButton("##toolbarPlayButton",
+                           (ImTextureID)icon->GetRendererID(),
+                           ImVec2(size, size),
+                           ImVec2(0, 0),
+                           ImVec2(1, 1))) {
+        if (m_SceneState == SceneState::Edit) {
+            OnScenePlay();
+        }
+        else if (m_SceneState == SceneState::Play) {
+            OnSceneStop();
+        }
+    }
+    ImGui::PopStyleVar(3);
+    ImGui::PopStyleColor(3);
     ImGui::End();
 }
 
@@ -431,8 +489,8 @@ void EditorLayer::OpenScene()
     std::string filepath = FileDialogs::OpenFile("Miriya Scene (*.miriya)\0*.miriya\0");
     if (!filepath.empty()) {
         // m_ActiveScene = CreateRef<Scene>();
-        // m_ActiveScene->OnViewportResize((uint32_t)m_ViewportSize.x, (uint32_t)m_ViewportSize.y);
-        // m_SceneHierarchyPanel.SetContext(m_ActiveScene);
+        // m_ActiveScene->OnViewportResize((uint32_t)m_ViewportSize.x,
+        // (uint32_t)m_ViewportSize.y); m_SceneHierarchyPanel.SetContext(m_ActiveScene);
 
         // SceneSerializer serializer(m_ActiveScene);
         // serializer.Deserialize(filepath);
@@ -457,6 +515,16 @@ void EditorLayer::SaveSceneAs()
         SceneSerializer serializer(m_ActiveScene);
         serializer.Serialize(filepath);
     }
+}
+
+void EditorLayer::OnScenePlay()
+{
+    m_SceneState = SceneState::Play;
+}
+
+void EditorLayer::OnSceneStop()
+{
+    m_SceneState = SceneState::Edit;
 }
 
 }   // namespace Miriya
