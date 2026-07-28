@@ -1,0 +1,17 @@
+shaderc/
+
+# SPIRV-Cross: 仅保留源码与构建所需，忽略测试数据/示例/CI
+SPIRV-Cross/reference/
+SPIRV-Cross/shaders/
+SPIRV-Cross/shaders-*/
+SPIRV-Cross/shaders-other/
+SPIRV-Cross/tests-other/
+SPIRV-Cross/samples/
+SPIRV-Cross/gn/
+SPIRV-Cross/pkg-config/
+SPIRV-Cross/appveyor.yml
+SPIRV-Cross/main.cpp
+SPIRV-Cross/Package.swift
+SPIRV-Cross/*.sh
+SPIRV-Cross/test_shaders.py
+

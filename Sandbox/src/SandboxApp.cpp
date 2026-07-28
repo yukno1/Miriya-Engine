@@ -18,7 +18,7 @@ public:
 };
 
 
-Miriya::Application* Miriya::CreateApplication()
+Miriya::Application* Miriya::CreateApplication(ApplicationCommandLineArgs args)
 {
     return new Sandbox();
 }

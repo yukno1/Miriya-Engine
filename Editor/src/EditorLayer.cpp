@@ -35,6 +35,13 @@ void EditorLayer::OnAttach()
 
     m_ActiveScene = CreateRef<Scene>();
 
+    auto commandLineArgs = Application::Get().GetCommandLineArgs();
+    if (commandLineArgs.Count > 1) {
+        auto            sceneFilePath = commandLineArgs[1];
+        SceneSerializer serializer(m_ActiveScene);
+        serializer.Deserialize(sceneFilePath);
+    }
+
     m_EditorCamera = EditorCamera(30.0f, 1.778f, 0.1f, 1000.0f);
 
 #if 0
@@ -394,8 +401,9 @@ bool EditorLayer::OnKeyPressed(KeyPressedEvent& e)
 bool EditorLayer::OnMouseButtonPressed(MouseButtonPressedEvent& e)
 {
     if (e.GetMouseButton() == Mouse::ButtonLeft) {
-        if (m_ViewportHovered && !ImGuizmo::IsOver() && !Input::IsKeyPressed(Key::LeftAlt))
+        if (m_ViewportHovered && !ImGuizmo::IsOver() && !Input::IsKeyPressed(Key::LeftAlt)) {
             m_SceneHierarchyPanel.SetSelectedEntity(m_HoveredEntity);
+        }
     }
     return false;
 }

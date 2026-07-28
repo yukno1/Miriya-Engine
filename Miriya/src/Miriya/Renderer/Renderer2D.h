@@ -65,6 +65,6 @@ public:
 private:
     static void StartBatch();
     static void NextBatch();
-    static void FlushAndReset();
 };
+
 }   // namespace Miriya

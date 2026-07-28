@@ -18,26 +18,8 @@
 #    define MIR_DEBUGBREAK()
 #endif
 
-// TODO: Make this macro able to take in no arguments except condition
-#ifdef MIR_ENABLE_ASSERTS
-#    define MIR_ASSERT(x, ...)                                   \
-        {                                                        \
-            if (!(x)) {                                          \
-                MIR_ERROR("Assertion Failed: {0}", __VA_ARGS__); \
-                MIR_DEBUGBREAK();                                \
-            }                                                    \
-        }
-#    define MIR_CORE_ASSERT(x, ...)                                   \
-        {                                                             \
-            if (!(x)) {                                               \
-                MIR_CORE_ERROR("Assertion Failed: {0}", __VA_ARGS__); \
-                MIR_DEBUGBREAK();                                     \
-            }                                                         \
-        }
-#else
-#    define MIR_ASSERT(x, ...)
-#    define MIR_CORE_ASSERT(x, ...)
-#endif
+#define MIR_EXPAND_MACRO(x) x
+#define MIR_STRINGIFY_MACRO(x) #x
 
 #define BIT(x) (1 << x)
 
@@ -58,3 +40,6 @@ template<typename T, typename... Args> constexpr Ref<T> CreateRef(Args&&... args
 }
 
 }   // namespace Miriya
+
+#include "Miriya/Core/Log.h"
+#include "Miriya/Core/Assert.h"
