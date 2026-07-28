@@ -2,6 +2,8 @@
 
 #include <filesystem>
 
+#include "Miriya/Renderer/Texture.h"
+
 namespace Miriya {
 
 class ContentBrowserPanel
@@ -13,6 +15,9 @@ public:
 
 private:
     std::filesystem::path m_CurrentDirectory;
+
+    Ref<Texture2D> m_DirectoryIcon;
+    Ref<Texture2D> m_FileIcon;
 };
 
 }   // namespace Miriya
