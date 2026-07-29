@@ -1,13 +1,29 @@
 #include "mirpch.h"
 #include "Scene.h"
-#include "Entity.h"
 
 #include "Components.h"
 #include "Miriya/Renderer/Renderer2D.h"
 
 #include <glm/glm.hpp>
 
+#include "Entity.h"
+
+// Box2D
+#include "box2d/box2d.h"
+
 namespace Miriya {
+
+static b2BodyType Rigidbody2DTypeToBox2DBody(Rigidbody2DComponent::BodyType bodyType)
+{
+    switch (bodyType) {
+    case Rigidbody2DComponent::BodyType::Static: return b2_staticBody;
+    case Rigidbody2DComponent::BodyType::Dynamic: return b2_dynamicBody;
+    case Rigidbody2DComponent::BodyType::Kinematic: return b2_kinematicBody;
+    }
+
+    MIR_CORE_ASSERT(false, "Unknown body type");
+    return b2_staticBody;
+}
 
 Scene::Scene() {}
 
@@ -27,6 +43,59 @@ void Scene::DestroyEntity(Entity entity)
     m_Registry.destroy(entity);
 }
 
+void Scene::OnRuntimeStart()
+{
+    b2WorldDef worldDef = b2DefaultWorldDef();
+    worldDef.gravity    = {0.0f, -9.8f};
+    m_PhysicsWorld      = b2CreateWorld(&worldDef);
+
+    auto view = m_Registry.view<Rigidbody2DComponent>();
+    for (auto e : view) {
+        Entity entity    = {e, this};
+        auto&  transform = entity.GetComponent<TransformComponent>();
+        auto&  rb2d      = entity.GetComponent<Rigidbody2DComponent>();
+
+        b2BodyDef bodyDef = b2DefaultBodyDef();
+        bodyDef.type      = Rigidbody2DTypeToBox2DBody(rb2d.Type);
+        bodyDef.position  = {transform.Translation.x, transform.Translation.y};
+        bodyDef.rotation  = b2MakeRot(transform.Rotation.z);
+
+        b2BodyId body = b2CreateBody(m_PhysicsWorld, &bodyDef);
+        // body->SetFixedRotation(rb2d.FixedRotation);
+        rb2d.RuntimeBody = body;
+
+        if (entity.HasComponent<BoxCollider2DComponent>()) {
+            auto& bc2d = entity.GetComponent<BoxCollider2DComponent>();
+
+            b2Polygon box =
+                b2MakeBox(bc2d.Size.x * transform.Scale.x, bc2d.Size.y * transform.Scale.y);
+
+            // b2FixtureDef fixtureDef;
+            // fixtureDef.shape                = &boxShape;
+            // fixtureDef.density              = bc2d.Density;
+            // fixtureDef.friction             = bc2d.Friction;
+            // fixtureDef.restitution          = bc2d.Restitution;
+            // fixtureDef.restitutionThreshold = bc2d.RestitutionThreshold;
+            // body->CreateFixture(&fixtureDef);
+            b2ShapeDef shapeDef           = b2DefaultShapeDef();
+            shapeDef.density              = bc2d.Density;
+            shapeDef.material.friction    = bc2d.Friction;
+            shapeDef.material.restitution = bc2d.Restitution;
+            // restitutionThreshold 在 3.x 是 world 级属性（worldDef.restitutionThreshold）
+
+            bc2d.RuntimeFixture = b2CreatePolygonShape(body, &shapeDef, &box);
+        }
+    }
+}
+
+void Scene::OnRuntimeStop()
+{
+    if (B2_IS_NON_NULL(m_PhysicsWorld)) {
+        b2DestroyWorld(m_PhysicsWorld);
+    }
+    m_PhysicsWorld = b2_nullWorldId;
+}
+
 void Scene::OnUpdateRuntime(Timestep ts)
 {
     // Update scripts
@@ -42,6 +111,37 @@ void Scene::OnUpdateRuntime(Timestep ts)
 
             nsc.Instance->OnUpdate(ts);
         });
+    }
+
+    // Physics
+    {
+        // const int32_t velocityIterations = 6;
+        // const int32_t positionIterations = 2;
+        // m_PhysicsWorld->Step(ts, velocityIterations, positionIterations);
+        // 物理步进（每帧固定步长，4 个子步）
+        if (B2_IS_NON_NULL(m_PhysicsWorld)) {
+            b2World_Step(m_PhysicsWorld, ts.GetSeconds(), 4);
+        }
+
+        // Retrieve transform from Box2D
+        auto view = m_Registry.view<Rigidbody2DComponent>();
+        for (auto e : view) {
+            Entity entity    = {e, this};
+            auto&  transform = entity.GetComponent<TransformComponent>();
+            auto&  rb2d      = entity.GetComponent<Rigidbody2DComponent>();
+
+            // b2Body*     body        = (b2Body*)rb2d.RuntimeBody;
+            // const auto& position    = body->GetPosition();
+            // transform.Translation.x = position.x;
+            // transform.Translation.y = position.y;
+            // transform.Rotation.z    = body->GetAngle();
+            if (B2_IS_NON_NULL(rb2d.RuntimeBody)) {
+                b2Transform t           = b2Body_GetTransform(rb2d.RuntimeBody);
+                transform.Translation.x = t.p.x;
+                transform.Translation.y = t.p.y;
+                transform.Rotation.z    = std::atan2(t.q.s, t.q.c);
+            }
+        }
     }
 
     // Render 2D
@@ -139,6 +239,15 @@ template<> void Scene::OnComponentAdded<TagComponent>(Entity entity, TagComponen
 
 template<>
 void Scene::OnComponentAdded<NativeScriptComponent>(Entity entity, NativeScriptComponent& component)
+{}
+
+template<>
+void Scene::OnComponentAdded<Rigidbody2DComponent>(Entity entity, Rigidbody2DComponent& component)
+{}
+
+template<>
+void Scene::OnComponentAdded<BoxCollider2DComponent>(Entity                  entity,
+                                                     BoxCollider2DComponent& component)
 {}
 
 }   // namespace Miriya
