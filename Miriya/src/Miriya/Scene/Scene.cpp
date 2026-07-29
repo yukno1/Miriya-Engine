@@ -2,6 +2,7 @@
 #include "Scene.h"
 
 #include "Components.h"
+#include "ScriptableEntity.h"
 #include "Miriya/Renderer/Renderer2D.h"
 
 #include <glm/glm.hpp>
@@ -31,7 +32,13 @@ Scene::~Scene() {}
 
 Entity Scene::CreateEntity(const std::string& name)
 {
+    return CreateEntityWithUUID(UUID(), name);
+}
+
+Entity Scene::CreateEntityWithUUID(UUID uuid, const std::string& name)
+{
     Entity entity = {m_Registry.create(), this};
+    entity.AddComponent<IDComponent>(uuid);
     entity.AddComponent<TransformComponent>();
     auto& tag = entity.AddComponent<TagComponent>();
     tag.Tag   = name.empty() ? "Entity" : name;
@@ -216,8 +223,10 @@ Entity Scene::GetPrimaryCameraEntity()
 
 template<typename T> void Scene::OnComponentAdded(Entity entity, T& component)
 {
-    static_assert(false);
+    // static_assert(false);
 }
+
+template<> void Scene::OnComponentAdded<IDComponent>(Entity entity, IDComponent& component) {}
 
 template<>
 void Scene::OnComponentAdded<TransformComponent>(Entity entity, TransformComponent& component)

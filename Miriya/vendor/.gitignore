@@ -26,3 +26,5 @@ box2d-3.1.1/build.sh
 box2d-3.1.1/build_emscripten.sh
 box2d-3.1.1/create_sln.bat
 box2d-3.1.1/deploy_docs.sh
+
+havok-2021.2/

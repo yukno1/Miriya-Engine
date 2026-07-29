@@ -1,6 +1,8 @@
 #pragma once
 
+#include "Miriya/Core/UUID.h"
 #include "Scene.h"
+#include "Components.h"
 
 #include <entt/entt.hpp>
 
@@ -41,6 +43,8 @@ public:
     operator bool() const { return m_EntityHandle != entt::null; }
     operator entt::entity() const { return m_EntityHandle; }
     operator uint32_t() const { return (uint32_t)m_EntityHandle; }
+
+    UUID GetUUID() { return GetComponent<IDComponent>().ID; }
 
     bool operator==(const Entity& other) const
     {

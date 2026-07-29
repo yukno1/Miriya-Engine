@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Miriya/Core/Timestep.h"
+#include "Miriya/Core/UUID.h"
 #include "Miriya/Renderer/EditorCamera.h"
 
 #include <entt/entt.hpp>
@@ -20,6 +21,7 @@ public:
     ~Scene();
 
     Entity CreateEntity(const std::string& name = std::string());
+    Entity CreateEntityWithUUID(UUID uuid, const std::string& name = std::string());
     void   DestroyEntity(Entity entity);
 
     void OnRuntimeStart();

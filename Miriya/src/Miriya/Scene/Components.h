@@ -1,5 +1,9 @@
 #pragma once
 
+#include "SceneCamera.h"
+#include "Miriya/Core/UUID.h"
+#include "Miriya/Renderer/Texture.h"
+
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 
@@ -8,11 +12,18 @@
 
 #include "box2d/id.h"
 
-#include "SceneCamera.h"
-#include "ScriptableEntity.h"
-#include "Miriya/Renderer/Texture.h"
-
 namespace Miriya {
+
+struct IDComponent
+{
+    UUID ID;
+
+    IDComponent()                   = default;
+    IDComponent(const IDComponent&) = default;
+    IDComponent(const UUID& uuid)
+        : ID(uuid)
+    {}
+};
 
 struct TagComponent
 {
@@ -69,6 +80,11 @@ struct CameraComponent
     CameraComponent(const CameraComponent&) = default;
 };
 
+// Forward declaration
+class ScriptableEntity;
+struct NativeScriptComponent;
+void DestroyNativeScript(NativeScriptComponent* nsc);
+
 struct NativeScriptComponent
 {
     ScriptableEntity* Instance = nullptr;
@@ -79,10 +95,7 @@ struct NativeScriptComponent
     template<typename T> void Bind()
     {
         InstantiateScript = []() { return static_cast<ScriptableEntity*>(new T()); };
-        DestroyScript     = [](NativeScriptComponent* nsc) {
-            delete nsc->Instance;
-            nsc->Instance = nullptr;
-        };
+        DestroyScript     = DestroyNativeScript;
     }
 };
 

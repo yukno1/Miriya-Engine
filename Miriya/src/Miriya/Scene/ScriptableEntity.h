@@ -7,7 +7,7 @@ namespace Miriya {
 class ScriptableEntity
 {
 public:
-    virtual ~ScriptableEntity() {}
+    virtual ~ScriptableEntity() = default;
 
     template<typename T> T& GetComponent() { return m_Entity.GetComponent<T>(); }
 
