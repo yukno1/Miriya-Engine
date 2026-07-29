@@ -4,6 +4,7 @@
 #include <glad/gl.h>
 
 namespace Miriya {
+
 void OpenGLRendererAPI::Init()
 {
     MIR_PROFILE_FUNCTION();
@@ -33,8 +34,9 @@ void OpenGLRendererAPI::Clear()
 
 void OpenGLRendererAPI::DrawIndexed(const Ref<VertexArray>& vertexArray, uint32_t indexCount)
 {
+    vertexArray->Bind();
     uint32_t count = indexCount ? vertexArray->GetIndexBuffer()->GetCount() : indexCount;
     glDrawElements(GL_TRIANGLES, count, GL_UNSIGNED_INT, nullptr);
-    glBindTexture(GL_TEXTURE_2D, 0);
 }
+
 }   // namespace Miriya
