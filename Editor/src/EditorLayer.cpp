@@ -476,7 +476,9 @@ void EditorLayer::OnEvent(Event& e)
 bool EditorLayer::OnKeyPressed(KeyPressedEvent& e)
 {
     // Shortcuts
-    if (e.GetRepeatCount() > 0) return false;
+    if (e.IsRepeat()) {
+        return false;
+    }
 
     bool control = Input::IsKeyPressed(Key::LeftControl) || Input::IsKeyPressed(Key::RightControl);
     bool shift   = Input::IsKeyPressed(Key::LeftShift) || Input::IsKeyPressed(Key::RightShift);
