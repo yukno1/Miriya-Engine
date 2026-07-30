@@ -6,8 +6,9 @@
 #include "Miriya/Renderer/Renderer.h"
 
 #include "Miriya/Core/Input.h"
+#include "Miriya/Util/PlatformUtil.h"
 
-#include <GLFW/glfw3.h>
+// #include <GLFW/glfw3.h>
 
 namespace Miriya {
 
@@ -80,7 +81,7 @@ void Application::Run()
         // main application loop
         MIR_PROFILE_SCOPE("RunLoop");
 
-        float    time     = static_cast<float>(glfwGetTime());   // TODO: Platform::GetTime()
+        float    time     = Time::GetTime();   // TODO: Platform::GetTime()
         Timestep timestep = time - m_LastFrameTime;
         m_LastFrameTime   = time;
 

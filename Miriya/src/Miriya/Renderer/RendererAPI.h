@@ -1,8 +1,8 @@
 #pragma once
 
-#include <glm/glm.hpp>
+#include "Miriya/Renderer/VertexArray.h"
 
-#include "VertexArray.h"
+#include <glm/glm.hpp>
 
 namespace Miriya {
 

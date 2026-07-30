@@ -1,8 +1,8 @@
 #pragma once
 
-#include <memory>
-
 #include "Miriya/Core/PlatformDetection.h"
+
+#include <memory>
 
 #ifdef MIR_DEBUG
 #    if defined(MIR_PLATFORM_WINDOWS)

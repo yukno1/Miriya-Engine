@@ -1,7 +1,8 @@
 #pragma once
 
-#include <string>
 #include "Miriya/Core/Base.h"
+
+#include <string>
 
 namespace Miriya {
 

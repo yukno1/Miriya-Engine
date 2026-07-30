@@ -1,15 +1,15 @@
 #include "EditorLayer.h"
+#include "Miriya/Scene/SceneSerializer.h"
+#include "Miriya/Util/PlatformUtil.h"
+#include "Miriya/Math/Math.h"
+
 #include <imgui/imgui.h>
 
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
-#include "Miriya/Scene/SceneSerializer.h"
-#include "Miriya/Util/PlatformUtil.h"
-
 #include "ImGuizmo.h"
 
-#include "Miriya/Math/Math.h"
 
 namespace Miriya {
 
@@ -465,7 +465,9 @@ void EditorLayer::UI_Toolbar()
 void EditorLayer::OnEvent(Event& e)
 {
     m_CameraController.OnEvent(e);
-    m_EditorCamera.OnEvent(e);
+    if (m_SceneState == SceneState::Edit) {
+        m_EditorCamera.OnEvent(e);
+    }
 
     EventDispatcher dispatcher(e);
     dispatcher.Dispatch<KeyPressedEvent>(MIR_BIND_EVENT_FN(EditorLayer::OnKeyPressed));

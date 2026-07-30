@@ -1,5 +1,7 @@
 #pragma once
 
+#include "Miriya/Core/Log.h"
+
 #include <string>
 #include <chrono>
 #include <algorithm>
@@ -8,8 +10,6 @@
 #include <thread>
 #include <mutex>
 #include <sstream>
-
-#include "Miriya/Core/Log.h"
 
 namespace Miriya {
 

@@ -12,4 +12,10 @@ public:
     static std::string SaveFile(const char* filter);
 };
 
+class Time
+{
+public:
+    static float GetTime();
+};
+
 }   // namespace Miriya

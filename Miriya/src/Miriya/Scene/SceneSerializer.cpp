@@ -290,6 +290,7 @@ bool SceneSerializer::Deserialize(const std::string& filepath)
         data = YAML::LoadFile(filepath);
     }
     catch (YAML::ParserException e) {
+        MIR_CORE_ERROR("Failed to load .miriya file '{0}'\n     {1}", filepath, e.what());
         return false;
     }
 

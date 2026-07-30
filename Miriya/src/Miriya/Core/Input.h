@@ -1,9 +1,9 @@
 #pragma once
 
-#include <glm/glm.hpp>
-
 #include "Miriya/Core/Keycode.h"
 #include "Miriya/Core/MouseCode.h"
+
+#include <glm/glm.hpp>
 
 namespace Miriya {
 class Input

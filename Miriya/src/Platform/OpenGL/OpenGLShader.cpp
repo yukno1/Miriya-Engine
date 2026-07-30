@@ -1,5 +1,6 @@
 #include "mirpch.h"
 #include "Platform/OpenGL/OpenGLShader.h"
+#include "Miriya/Core/Timer.h"
 
 #include <fstream>
 #include <glad/gl.h>
@@ -9,8 +10,6 @@
 #include <shaderc/shaderc.hpp>
 #include <spirv_cross.hpp>
 #include <spirv_glsl.hpp>
-
-#include "Miriya/Core/Timer.h"
 
 // import std;
 

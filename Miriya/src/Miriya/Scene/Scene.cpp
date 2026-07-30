@@ -1,5 +1,6 @@
 #include "mirpch.h"
 #include "Scene.h"
+#include "Entity.h"
 
 #include "Components.h"
 #include "ScriptableEntity.h"
@@ -428,7 +429,7 @@ void Scene::RenderScene(EditorCamera& camera)
 
 template<typename T> void Scene::OnComponentAdded(Entity entity, T& component)
 {
-    // static_assert(false);
+    static_assert(sizeof(T) == 0);
 }
 
 template<> void Scene::OnComponentAdded<IDComponent>(Entity entity, IDComponent& component) {}

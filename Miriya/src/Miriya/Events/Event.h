@@ -1,9 +1,9 @@
 #pragma once
 
-#include <functional>
-
 #include "Miriya/Debug/Instrumentor.h"
 #include "Miriya/Core/Base.h"
+
+#include <functional>
 
 namespace Miriya {
 // Events in Miriya are currently blocking, meaning when an event occurs it
