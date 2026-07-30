@@ -79,6 +79,7 @@ Ref<Scene> Scene::Copy(Ref<Scene> other)
     CopyComponent<NativeScriptComponent>(dstSceneRegistry, srcSceneRegistry, enttMap);
     CopyComponent<Rigidbody2DComponent>(dstSceneRegistry, srcSceneRegistry, enttMap);
     CopyComponent<BoxCollider2DComponent>(dstSceneRegistry, srcSceneRegistry, enttMap);
+    CopyComponent<CircleCollider2DComponent>(dstSceneRegistry, srcSceneRegistry, enttMap);
 
     return newScene;
 }
@@ -144,6 +145,28 @@ void Scene::OnRuntimeStart()
             // restitutionThreshold 在 3.x 是 world 级属性（worldDef.restitutionThreshold）
 
             bc2d.RuntimeFixture = b2CreatePolygonShape(body, &shapeDef, &box);
+        }
+
+        if (entity.HasComponent<CircleCollider2DComponent>()) {
+            auto& cc2d = entity.GetComponent<CircleCollider2DComponent>();
+
+            b2Circle circle;
+            circle.center = {cc2d.Offset.x, cc2d.Offset.y};
+            circle.radius = cc2d.Radius;
+
+            // b2FixtureDef fixtureDef;
+            // fixtureDef.shape                = &circleShape;
+            // fixtureDef.density              = cc2d.Density;
+            // fixtureDef.friction             = cc2d.Friction;
+            // fixtureDef.restitution          = cc2d.Restitution;
+            // fixtureDef.restitutionThreshold = cc2d.RestitutionThreshold;
+            b2ShapeDef shapeDef           = b2DefaultShapeDef();
+            shapeDef.density              = cc2d.Density;
+            shapeDef.material.friction    = cc2d.Friction;
+            shapeDef.material.restitution = cc2d.Restitution;
+            // restitutionThreshold 在 3.x 是 world 级属性（worldDef.restitutionThreshold）
+
+            cc2d.RuntimeFixture = b2CreateCircleShape(body, &shapeDef, &circle);
         }
     }
 }
@@ -310,6 +333,7 @@ void Scene::DuplicateEntity(Entity entity)
     CopyComponentIfExists<NativeScriptComponent>(newEntity, entity);
     CopyComponentIfExists<Rigidbody2DComponent>(newEntity, entity);
     CopyComponentIfExists<BoxCollider2DComponent>(newEntity, entity);
+    CopyComponentIfExists<CircleCollider2DComponent>(newEntity, entity);
 }
 
 Entity Scene::GetPrimaryCameraEntity()
@@ -363,6 +387,11 @@ void Scene::OnComponentAdded<Rigidbody2DComponent>(Entity entity, Rigidbody2DCom
 template<>
 void Scene::OnComponentAdded<BoxCollider2DComponent>(Entity                  entity,
                                                      BoxCollider2DComponent& component)
+{}
+
+template<>
+void Scene::OnComponentAdded<CircleCollider2DComponent>(Entity                     entity,
+                                                        CircleCollider2DComponent& component)
 {}
 
 }   // namespace Miriya
