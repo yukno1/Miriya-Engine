@@ -28,6 +28,7 @@ void EditorLayer::OnAttach()
     m_CheckerboardTexture = Texture2D::Create("assets/textures/Checkerboard.png");
     m_IconPlay            = Texture2D::Create("Resources/Icons/PlayButton.png");
     m_IconStop            = Texture2D::Create("Resources/Icons/StopButton.png");
+    m_IconSimulate        = Texture2D::Create("Resources/Icons/SimulateButton.png");
 
     FramebufferSpecification fbSpec;
     fbSpec.Attachments = {FramebufferTextureFormat::RGBA8,
@@ -37,7 +38,8 @@ void EditorLayer::OnAttach()
     fbSpec.Height      = 720;
     m_Framebuffer      = Framebuffer::Create(fbSpec);
 
-    m_ActiveScene = CreateRef<Scene>();
+    m_EditorScene = CreateRef<Scene>();
+    m_ActiveScene = m_EditorScene;
 
     auto commandLineArgs = Application::Get().GetCommandLineArgs();
     if (commandLineArgs.Count > 1) {
@@ -146,6 +148,13 @@ void EditorLayer::OnUpdate(Timestep ts)
     case SceneState::Play:
     {
         m_ActiveScene->OnUpdateRuntime(ts);
+        break;
+    }
+    case SceneState::Simulate:
+    {
+        m_EditorCamera.OnUpdate(ts);
+
+        m_ActiveScene->OnUpdateSimulation(ts, m_EditorCamera);
         break;
     }
     }
@@ -401,24 +410,53 @@ void EditorLayer::UI_Toolbar()
                  ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoScrollbar |
                      ImGuiWindowFlags_NoScrollWithMouse);
 
-    float          size = ImGui::GetWindowHeight() - 4.0f;
-    Ref<Texture2D> icon = m_SceneState == SceneState::Edit ? m_IconPlay : m_IconStop;
-    ImGui::SetCursorPosX((ImGui::GetWindowContentRegionMax().x * 0.5f) - (size * 0.5f));
-    // 旧版 frame_padding = 0 表示按钮图片周围不加内边距。新版去掉该参数后会使用默认的
-    // ImGuiStyleVar_FramePadding。
-    ImGui::PushStyleVar(ImGuiStyleVar_FramePadding, ImVec2(0, 0));
-    if (ImGui::ImageButton("##toolbarPlayButton",
-                           (ImTextureID)icon->GetRendererID(),
-                           ImVec2(size, size),
-                           ImVec2(0, 0),
-                           ImVec2(1, 1))) {
-        if (m_SceneState == SceneState::Edit) {
-            OnScenePlay();
-        }
-        else if (m_SceneState == SceneState::Play) {
-            OnSceneStop();
+    bool toolbarEnabled = (bool)m_ActiveScene;
+
+    ImVec4 tintColor = ImVec4(1, 1, 1, 1);
+    if (!toolbarEnabled) {
+        tintColor.w = 0.5f;
+    }
+
+    float size = ImGui::GetWindowHeight() - 4.0f;
+    {
+        Ref<Texture2D> icon = m_SceneState == SceneState::Edit ? m_IconPlay : m_IconStop;
+        ImGui::SetCursorPosX((ImGui::GetWindowContentRegionMax().x * 0.5f) - (size * 0.5f));
+        // 旧版 frame_padding = 0 表示按钮图片周围不加内边距。新版去掉该参数后会使用默认的
+        // ImGuiStyleVar_FramePadding。
+        ImGui::PushStyleVar(ImGuiStyleVar_FramePadding, ImVec2(0, 0));
+        if (ImGui::ImageButton("##toolbarPlayButton",
+                               (ImTextureID)icon->GetRendererID(),
+                               ImVec2(size, size),
+                               ImVec2(0, 0),
+                               ImVec2(1, 1))) {
+            if (m_SceneState == SceneState::Edit) {
+                OnScenePlay();
+            }
+            else if (m_SceneState == SceneState::Play) {
+                OnSceneStop();
+            }
         }
     }
+    ImGui::SameLine();
+    {
+        Ref<Texture2D> icon =
+            (m_SceneState == SceneState::Edit || m_SceneState == SceneState::Play)
+                ? m_IconSimulate
+                : m_IconStop;   // ImGui::SetCursorPosX((ImGui::GetWindowContentRegionMax().x
+                                // * 0.5f) - (size * 0.5f));
+        if (ImGui::ImageButton("##toolbarSimulateButton",
+                               (ImTextureID)icon->GetRendererID(),
+                               ImVec2(size, size),
+                               ImVec2(0, 0),
+                               ImVec2(1, 1)) &&
+            toolbarEnabled) {
+            if (m_SceneState == SceneState::Edit || m_SceneState == SceneState::Play)
+                OnSceneSimulate();
+            else if (m_SceneState == SceneState::Simulate)
+                OnSceneStop();
+        }
+    }
+
     ImGui::PopStyleVar(3);
     ImGui::PopStyleColor(3);
     ImGui::End();
@@ -468,13 +506,12 @@ bool EditorLayer::OnKeyPressed(KeyPressedEvent& e)
 
         break;
     }
-        // Scene Commands
+    // Scene Commands
     case Key::D:
     {
         if (control) {
             OnDuplicateEntity();
         }
-
         break;
     }
 
@@ -500,6 +537,10 @@ void EditorLayer::OnOverlayRender()
 {
     if (m_SceneState == SceneState::Play) {
         Entity camera = m_ActiveScene->GetPrimaryCameraEntity();
+        if (!camera) {
+            return;
+        }
+
         Renderer2D::BeginScene(camera.GetComponent<CameraComponent>().Camera,
                                camera.GetComponent<TransformComponent>().GetTransform());
     }
@@ -540,7 +581,7 @@ void EditorLayer::OnOverlayRender()
                 glm::mat4 transform = glm::translate(glm::mat4(1.0f), translation) *
                                       glm::scale(glm::mat4(1.0f), scale);
 
-                Renderer2D::DrawCircle(transform, glm::vec4(0, 1, 0, 1), 0.01f);
+                Renderer2D::DrawCircle(transform, glm::vec4(0, 1, 0, 1), 0.03f);
             }
         }
     }
@@ -613,6 +654,10 @@ void EditorLayer::SerializeScene(Ref<Scene> scene, const std::filesystem::path& 
 
 void EditorLayer::OnScenePlay()
 {
+    if (m_SceneState == SceneState::Simulate) {
+        OnSceneStop();
+    }
+
     m_SceneState = SceneState::Play;
 
     m_ActiveScene = Scene::Copy(m_EditorScene);
@@ -621,11 +666,31 @@ void EditorLayer::OnScenePlay()
     m_SceneHierarchyPanel.SetContext(m_ActiveScene);
 }
 
+void EditorLayer::OnSceneSimulate()
+{
+    if (m_SceneState == SceneState::Play) OnSceneStop();
+
+    m_SceneState = SceneState::Simulate;
+
+    m_ActiveScene = Scene::Copy(m_EditorScene);
+    m_ActiveScene->OnSimulationStart();
+
+    m_SceneHierarchyPanel.SetContext(m_ActiveScene);
+}
+
 void EditorLayer::OnSceneStop()
 {
+    MIR_CORE_ASSERT(m_SceneState == SceneState::Play || m_SceneState == SceneState::Simulate);
+
+    if (m_SceneState == SceneState::Play) {
+        m_ActiveScene->OnRuntimeStop();
+    }
+    else if (m_SceneState == SceneState::Simulate) {
+        m_ActiveScene->OnSimulationStop();
+    }
+
     m_SceneState = SceneState::Edit;
 
-    m_ActiveScene->OnRuntimeStop();
     m_ActiveScene = m_EditorScene;
 
     m_SceneHierarchyPanel.SetContext(m_ActiveScene);
