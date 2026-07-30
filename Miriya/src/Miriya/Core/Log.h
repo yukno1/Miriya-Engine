@@ -51,6 +51,7 @@ inline OStream& operator<<(OStream& os, glm::qua<T, Q> quaternion)
 #define MIR_CORE_INFO(...) ::Miriya::Log::GetCoreLogger()->info(__VA_ARGS__)
 #define MIR_CORE_TRACE(...) ::Miriya::Log::GetCoreLogger()->trace(__VA_ARGS__)
 #define MIR_CORE_FATAL(...) ::Miriya::Log::GetCoreLogger()->fatal(__VA_ARGS__)
+#define MIR_CORE_CRITICAL(...) ::Miriya::Log::GetCoreLogger()->critical(__VA_ARGS__)
 
 // Client log macros
 #define MIR_ERROR(...) ::Miriya::Log::GetClientLogger()->error(__VA_ARGS__)
@@ -58,3 +59,4 @@ inline OStream& operator<<(OStream& os, glm::qua<T, Q> quaternion)
 #define MIR_INFO(...) ::Miriya::Log::GetClientLogger()->info(__VA_ARGS__)
 #define MIR_TRACE(...) ::Miriya::Log::GetClientLogger()->trace(__VA_ARGS__)
 #define MIR_FATAL(...) ::Miriya::Log::GetClientLogger()->fatal(__VA_ARGS__)
+#define MIR_CRITICAL(...) ::Miriya::Log::GetClientLogger()->critical(__VA_ARGS__)
