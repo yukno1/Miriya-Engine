@@ -25,11 +25,17 @@ struct ApplicationCommandLineArgs
     }
 };
 
+struct ApplicationSpecification
+{
+    std::string                Name = "Miriya Application";
+    std::string                WorkingDirectory;
+    ApplicationCommandLineArgs CommandLineArgs;
+};
+
 class Application
 {
 public:
-    Application(const std::string&         name = "Miriya App",
-                ApplicationCommandLineArgs args = ApplicationCommandLineArgs());
+    Application(const ApplicationSpecification& specification);
     virtual ~Application();
 
     void Run();
@@ -47,15 +53,15 @@ public:
 
     static Application& Get() { return *s_Instance; }
 
-    ApplicationCommandLineArgs GetCommandLineArgs() const { return m_CommandLineArgs; }
+    const ApplicationSpecification& GetSpecification() const { return m_Specification; }
 
 private:
     bool OnWindowClose(WindowCloseEvent& e);
     bool OnWindowResize(WindowResizeEvent& e);
 
 private:
-    ApplicationCommandLineArgs m_CommandLineArgs;
-    std::unique_ptr<Window>    m_Window;
+    ApplicationSpecification m_Specification;
+    std::unique_ptr<Window>  m_Window;
     // imgui layer automatically added by Miriya runtime
     ImGuiLayer* m_ImGuiLayer;
 

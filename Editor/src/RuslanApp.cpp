@@ -8,8 +8,8 @@ namespace Miriya {
 class Ruslan : public Application
 {
 public:
-    Ruslan(ApplicationCommandLineArgs args)
-        : Application("Ruslan", args)
+    Ruslan(const ApplicationSpecification& spec)
+        : Application(spec)
     {
         PushLayer(new EditorLayer());
     }
@@ -19,7 +19,11 @@ public:
 
 Application* CreateApplication(ApplicationCommandLineArgs args)
 {
-    return new Ruslan(args);
+    ApplicationSpecification spec;
+    spec.Name            = "Ruslan";
+    spec.CommandLineArgs = args;
+
+    return new Ruslan(spec);
 }
 
 }   // namespace Miriya

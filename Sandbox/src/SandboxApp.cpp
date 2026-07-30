@@ -8,7 +8,8 @@
 class Sandbox : public Miriya::Application
 {
 public:
-    Sandbox()
+    Sandbox(const Miriya::ApplicationSpecification& specification)
+        : Miriya::Application(specification)
     {
         // PushLayer(new ExampleLayer());
         PushLayer(new Sandbox2D());
@@ -20,5 +21,10 @@ public:
 
 Miriya::Application* Miriya::CreateApplication(ApplicationCommandLineArgs args)
 {
-    return new Sandbox();
+    ApplicationSpecification spec;
+    spec.Name             = "Sandbox";
+    spec.WorkingDirectory = "../Editor";
+    spec.CommandLineArgs  = args;
+
+    return new Sandbox(spec);
 }
