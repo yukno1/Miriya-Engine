@@ -50,58 +50,7 @@ void EditorLayer::OnAttach()
 
     m_EditorCamera = EditorCamera(30.0f, 1.778f, 0.1f, 1000.0f);
 
-#if 0
-    // Entity
-    auto square = m_ActiveScene->CreateEntity("Green Square");
-    square.AddComponent<SpriteRendererComponent>(glm::vec4{0.0f, 1.0f, 0.0f, 1.0f});
-
-    auto redSquare = m_ActiveScene->CreateEntity("Red Square");
-    redSquare.AddComponent<SpriteRendererComponent>(glm::vec4{1.0f, 0.0f, 0.0f, 1.0f});
-
-    m_SquareEntity = square;
-
-    m_CameraEntity = m_ActiveScene->CreateEntity("Camera A");
-    m_CameraEntity.AddComponent<CameraComponent>();
-
-    m_SecondCamera = m_ActiveScene->CreateEntity("Camera B");
-    auto& cc       = m_SecondCamera.AddComponent<CameraComponent>();
-    cc.Primary     = false;
-
-    class CameraController : public ScriptableEntity
-    {
-    public:
-        void OnCreate() override
-        {
-            auto& translation = GetComponent<TransformComponent>().Translation;
-            translation.x     = rand() % 10 - 5.0f;
-        }
-
-        void OnDestroy() override {}
-
-        void OnUpdate(Timestep ts) override
-        {
-            auto& translation = GetComponent<TransformComponent>().Translation;
-
-            float speed = 5.0f;
-
-            if (Input::IsKeyPressed(Key::A)) {
-                translation.x -= speed * ts;
-            }
-            if (Input::IsKeyPressed(Key::D)) {
-                translation.x += speed * ts;
-            }
-            if (Input::IsKeyPressed(Key::W)) {
-                translation.y += speed * ts;
-            }
-            if (Input::IsKeyPressed(Key::S)) {
-                translation.y -= speed * ts;
-            }
-        }
-    };
-
-    m_CameraEntity.AddComponent<NativeScriptComponent>().Bind<CameraController>();
-    m_SecondCamera.AddComponent<NativeScriptComponent>().Bind<CameraController>();
-#endif
+    Renderer2D::SetLineWidth(4.0f);
 }
 
 void EditorLayer::OnDetach()
@@ -588,6 +537,13 @@ void EditorLayer::OnOverlayRender()
                 Renderer2D::DrawCircle(transform, glm::vec4(0, 1, 0, 1), 0.03f);
             }
         }
+    }
+
+    // Draw selected entity outline
+    if (Entity selectedEntity = m_SceneHierarchyPanel.GetSelectedEntity()) {
+        const TransformComponent& transform = selectedEntity.GetComponent<TransformComponent>();
+        Renderer2D::DrawRect(transform.GetTransform(),
+                             glm::vec4(1.0f, 0.5f, 0.0f, 1.0f));   // orange
     }
 
     Renderer2D::EndScene();
