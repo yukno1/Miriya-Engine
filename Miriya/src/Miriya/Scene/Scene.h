@@ -37,6 +37,11 @@ public:
 
     Entity GetPrimaryCameraEntity();
 
+    template<typename... Components> auto GetAllEntitiesWith()
+    {
+        return m_Registry.view<Components...>();
+    }
+
 private:
     template<typename T> void OnComponentAdded(Entity entity, T& component);
 

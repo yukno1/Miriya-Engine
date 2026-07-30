@@ -152,7 +152,7 @@ void Scene::OnRuntimeStart()
 
             b2Circle circle;
             circle.center = {cc2d.Offset.x, cc2d.Offset.y};
-            circle.radius = cc2d.Radius;
+            circle.radius = transform.Scale.x * cc2d.Radius;
 
             // b2FixtureDef fixtureDef;
             // fixtureDef.shape                = &circleShape;
