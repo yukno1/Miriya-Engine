@@ -1,23 +1,26 @@
 Scene: Untitled
 Entities:
-  - Entity: 13457996017885142676
+  - Entity: 16690655402647129366
     TagComponent:
-      Tag: Camera B
+      Tag: Green Square
     TransformComponent:
-      Translation: [-4, 0, 0]
+      Translation: [0, 0, 0]
       Rotation: [0, 0, 0]
       Scale: [1, 1, 1]
-    CameraComponent:
-      Camera:
-        ProjectionType: 1
-        PerspectiveFOV: 0.7853982
-        PerspectiveNear: 0.01
-        PerspectiveFar: 1000
-        OrthographicSize: 10
-        OrthographicNear: -1
-        OrthographicFar: 1
-      Primary: false
-      FixedAspectRatio: false
+    SpriteRendererComponent:
+      Color: [0, 1, 0, 1]
+      TexturePath: assets\textures\Checkerboard.png
+      TilingFactor: 1
+  - Entity: 10788784048880310703
+    TagComponent:
+      Tag: Red Square
+    TransformComponent:
+      Translation: [2.9, 0, 0]
+      Rotation: [0, 0, 0]
+      Scale: [1, 1, 1]
+    SpriteRendererComponent:
+      Color: [1, 0, 0, 1]
+      TilingFactor: 1
   - Entity: 4739456676491703160
     TagComponent:
       Tag: Camera A
@@ -36,21 +39,21 @@ Entities:
         OrthographicFar: 1
       Primary: true
       FixedAspectRatio: false
-  - Entity: 10788784048880310703
+  - Entity: 13457996017885142676
     TagComponent:
-      Tag: Red Square
+      Tag: Camera B
     TransformComponent:
-      Translation: [2.9, 0, 0]
+      Translation: [-4, 0, 0]
       Rotation: [0, 0, 0]
       Scale: [1, 1, 1]
-    SpriteRendererComponent:
-      Color: [1, 0, 0, 1]
-  - Entity: 16690655402647129366
-    TagComponent:
-      Tag: Green Square
-    TransformComponent:
-      Translation: [0, 0, 0]
-      Rotation: [0, 0, 0]
-      Scale: [1, 1, 1]
-    SpriteRendererComponent:
-      Color: [0, 1, 0, 1]
+    CameraComponent:
+      Camera:
+        ProjectionType: 1
+        PerspectiveFOV: 0.7853982
+        PerspectiveNear: 0.01
+        PerspectiveFar: 1000
+        OrthographicSize: 10
+        OrthographicNear: -1
+        OrthographicFar: 1
+      Primary: false
+      FixedAspectRatio: false
