@@ -1,7 +1,5 @@
 #pragma once
 
-#include <xhash>
-
 namespace Miriya {
 
 class UUID
@@ -21,12 +19,11 @@ private:
 
 namespace std {
 
+template<typename T> struct hash;
+
 template<> struct hash<Miriya::UUID>
 {
-    std::size_t operator()(const Miriya::UUID& uuid) const
-    {
-        return hash<uint64_t>()((uint64_t)uuid);
-    }
+    std::size_t operator()(const Miriya::UUID& uuid) const { return (uint64_t)uuid; }
 };
 
 }   // namespace std
