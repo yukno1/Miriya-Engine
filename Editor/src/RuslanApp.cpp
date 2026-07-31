@@ -13,8 +13,6 @@ public:
     {
         PushLayer(new EditorLayer());
     }
-
-    ~Ruslan() {}
 };
 
 Application* CreateApplication(ApplicationCommandLineArgs args)
